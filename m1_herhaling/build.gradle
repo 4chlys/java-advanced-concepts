@@ -12,7 +12,7 @@ java {
 }
 
 application {
-    mainClass = 'Demo1'
+    mainClass = 'be.kdg.Demo1'
 }
 
 repositories {
