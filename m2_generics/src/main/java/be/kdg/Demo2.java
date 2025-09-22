@@ -175,8 +175,6 @@ public class Demo2 {
             System.out.println("-> " + bike.getBrand() + " " + bike.getModel());
         }
 
-        System.out.println("\n" + "=".repeat(60));
-        System.out.println("ALL PRIORITY QUEUE TESTS COMPLETED!");
-        System.out.println("=".repeat(60));
+        System.out.println("=== ALL PRIORITY QUEUE TESTS COMPLETED! ===");
     }
 }
