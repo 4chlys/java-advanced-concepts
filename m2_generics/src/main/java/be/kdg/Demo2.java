@@ -38,8 +38,8 @@ public class Demo2 {
         System.out.println("Adding race bikes with random priorities (1-5):");
 
         for (RaceBike raceBike : raceBikes) {
-            int priority = random.nextInt(5) + 1;
-            boolean added = raceBikeQueue.enqueue(raceBike, priority);
+            var priority = random.nextInt(5) + 1;
+            var added = raceBikeQueue.enqueue(raceBike, priority);
             System.out.printf("Priority %d: %-12s %-20s -> %s%n",
                     priority, raceBike.getBrand(), raceBike.getModel(),
                     added ? "Added" : "Duplicate");
@@ -76,13 +76,13 @@ public class Demo2 {
         // Test 4: Duplicate handling
         System.out.println("\n4. DUPLICATE HANDLING TESTING");
         System.out.println("-".repeat(30));
-        RaceBike existingBike = raceBikes.getFirst();
+        var existingBike = raceBikes.getFirst();
         System.out.printf("Trying to add existing bike again (%s %s): %s%n",
                 existingBike.getBrand(), existingBike.getModel(),
                 raceBikeQueue.enqueue(existingBike, 3) ? "Added" : "Rejected (duplicate)");
 
         // Add a completely new bike
-        RaceBike newBike = new RaceBike(Brand.CERVELO, "Test Model");
+        var newBike = new RaceBike(Brand.CERVELO, "Test Model");
         System.out.printf("Adding new bike (%s %s): %s%n",
                 newBike.getBrand(), newBike.getModel(),
                 raceBikeQueue.enqueue(newBike, 4) ? "Added" : "Rejected");
@@ -101,7 +101,7 @@ public class Demo2 {
         System.out.println("Dequeuing first 10 bikes (should be in priority order):");
 
         for (int i = 1; i <= 10 && !raceBikeQueue.isEmpty(); i++) {
-            RaceBike dequeuedBike = raceBikeQueue.dequeue();
+            var dequeuedBike = raceBikeQueue.dequeue();
             if (dequeuedBike != null) {
                 System.out.printf("%2d. %-12s %-20s%n",
                         i, dequeuedBike.getBrand(), dequeuedBike.getModel());
@@ -141,7 +141,7 @@ public class Demo2 {
         System.out.println("-".repeat(30));
 
         // Dequeue all remaining items
-        int remainingCount = raceBikeQueue.getSize();
+        var remainingCount = raceBikeQueue.getSize();
         System.out.println("Dequeuing all remaining " + remainingCount + " bikes...");
 
         while (!raceBikeQueue.isEmpty()) {
@@ -171,7 +171,7 @@ public class Demo2 {
 
         System.out.println("\nFinal dequeue order (should be: Priority 5 bikes first, then 3, then 1):");
         while (!finalQueue.isEmpty()) {
-            RaceBike bike = finalQueue.dequeue();
+            var bike = finalQueue.dequeue();
             System.out.println("-> " + bike.getBrand() + " " + bike.getModel());
         }
 
