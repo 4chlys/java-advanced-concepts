@@ -98,4 +98,13 @@ public abstract class Vehicle {
     public void setCurrency(Currency currency) {
         this.currency = currency;
     }
+
+    @Override
+    public String toString() {
+        return String.format("colour: %-8s (%.0f %s) %.1f kg",
+                color.toString(),
+                price != null ? price : BigDecimal.ZERO,
+                currency.toString(),
+                weight);
+    }
 }

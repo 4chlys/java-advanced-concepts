@@ -344,13 +344,11 @@ public class RaceBike extends Vehicle implements Comparable<RaceBike> {
 
     @Override
     public String toString() {
-        return String.format("%-12s %-20s (%.0f %s) %-8s frame: %-10s %.1f kg",
+        return String.format("%-12s %-20s %s %-8s frame: %-10s",
                 brand.toString(),
                 model,
-                price != null ? price : BigDecimal.ZERO,
-                currency.toString(),
+                super.toString(),
                 frameMaterial != null ? frameMaterial.toString() : "N/A",
-                frameSize > 0 ? frameSize + "cm" : "N/A",
-                weight);
+                frameSize > 0 ? frameSize + "cm" : "N/A");
     }
 }
