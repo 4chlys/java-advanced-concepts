@@ -221,9 +221,10 @@ public class RaceBike implements Comparable<RaceBike> {
 
     @Override
     public String toString() {
-        return String.format("%-12s %-20s (%.0f %s) %-8s frame: %-10s %.1f kg",
+        return String.format("%-12s %-20s colour: %-8s (%.0f %s) %-8s frame: %-10s %.1f kg",
                 brand.toString(),
                 model,
+                color.toString(),
                 price != null ? price : BigDecimal.ZERO,
                 currency.toString(),
                 frameMaterial != null ? frameMaterial.toString() : "N/A",

@@ -51,12 +51,24 @@ public class Demo1 {
         boolean containsTest = collection.contains(Brand.PINARELLO, "Dogma F12");
         System.out.println("Contains PINARELLO Dogma F12: " + containsTest);
 
-        System.out.println("\n--- Testing remove functionality ---");
+        System.out.println("\n--- Testing remove functionality (with Iterator) ---");
         System.out.println("Size before removal: " + collection.getSize());
         RaceBike bikeToRemove = new RaceBike(Brand.CUBE, "Attain Race");
         boolean removed = collection.remove(bikeToRemove);
         System.out.println("Removed CUBE Attain Race: " + removed);
         System.out.println("Size after removal: " + collection.getSize());
+
+        System.out.println("\n--- Testing remove by brand and model (with Iterator) ---");
+        System.out.println("Size before removal: " + collection.getSize());
+        boolean removed2 = collection.remove(Brand.SPECIALIZED, "S-Works Tarmac SL7");
+        System.out.println("Removed SPECIALIZED S-Works Tarmac SL7: " + removed2);
+        System.out.println("Size after removal: " + collection.getSize());
+
+        System.out.println("\n--- Testing removeIf functionality ---");
+        System.out.println("Size before removeIf: " + collection.getSize());
+        int removedCount = collection.removeIf(bike -> bike.getBrand() == Brand.TREK);
+        System.out.println("Removed " + removedCount + " TREK bike(s) using removeIf");
+        System.out.println("Size after removeIf: " + collection.getSize());
 
         System.out.println("\n--- Testing size method ---");
         System.out.println("Final collection size: " + collection.getSize());

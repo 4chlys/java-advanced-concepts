@@ -21,11 +21,61 @@ public class RaceBikes {
     }
 
     /**
-     * Removes a RaceBike from the collection.
+     * Removes a RaceBike from the collection using an Iterator (safe removal).
      * Returns true if the bike was removed, false if it wasn't found.
      */
     public boolean remove(RaceBike raceBike) {
-        return raceBikes.remove(raceBike);
+        if (raceBike == null) {
+            return false;
+        }
+
+        Iterator<RaceBike> iterator = raceBikes.iterator();
+        while (iterator.hasNext()) {
+            RaceBike bike = iterator.next();
+            if (bike.equals(raceBike)) {
+                iterator.remove();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Removes a RaceBike by brand and model using an Iterator.
+     * Returns true if the bike was removed, false if it wasn't found.
+     */
+    public boolean remove(Brand brand, String model) {
+        if (brand == null || model == null || model.trim().isEmpty()) {
+            return false;
+        }
+
+        Iterator<RaceBike> iterator = raceBikes.iterator();
+        while (iterator.hasNext()) {
+            RaceBike bike = iterator.next();
+            if (bike.getBrand() == brand && bike.getModel().equalsIgnoreCase(model.trim())) {
+                iterator.remove();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Removes all RaceBikes that match a given predicate.
+     * Returns the number of bikes removed.
+     *
+     * Example usage:
+     * - collection.removeIf(bike -> bike.getBrand() == Brand.TREK)
+     * - collection.removeIf(bike -> bike.getPrice().compareTo(new BigDecimal("5000")) > 0)
+     */
+    public int removeIf(java.util.function.Predicate<RaceBike> predicate) {
+        if (predicate == null) {
+            throw new IllegalArgumentException("Predicate cannot be null");
+        }
+
+        int initialSize = raceBikes.size();
+        raceBikes.removeIf(predicate);
+        return initialSize - raceBikes.size();
     }
 
     /**
