@@ -1,5 +1,7 @@
 package be.kdg.model;
 
+import be.kdg.reflection.CanRun;
+
 import java.math.BigDecimal;
 
 public abstract class Vehicle {

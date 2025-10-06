@@ -1,5 +1,7 @@
 package be.kdg.model;
 
+import be.kdg.reflection.CanRun;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -215,6 +217,7 @@ public class RaceBike extends Vehicle implements Comparable<RaceBike> {
      * @param model the model name to set (must not be null or empty)
      * @throws IllegalArgumentException if model is null or empty after trimming
      */
+    @CanRun("Dogma F12")
     public void setModel(String model) {
         if (model == null || model.trim().isEmpty()) {
             throw new IllegalArgumentException("model cannot be null or empty");
