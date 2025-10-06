@@ -10,6 +10,10 @@ public class RaceBikes {
         this.raceBikes = new TreeSet<>();
     }
 
+    public RaceBikes(Collection<RaceBike> raceBikes) {
+        this.raceBikes = new TreeSet<>(raceBikes);
+    }
+
     /**
      * Adds a RaceBike to the collection.
      * Returns true if the bike was added, false if it already exists.
@@ -19,6 +23,18 @@ public class RaceBikes {
             throw new IllegalArgumentException("RaceBike cannot be null");
         }
         return raceBikes.add(raceBike);
+    }
+
+    /**
+     * Adds multiple RaceBikes to the collection.
+     * @param raceBikes
+     * @return true if any bike was added, false if all bikes already existed or raceBikes was null.
+     */
+    public boolean addAll(Collection<RaceBike> raceBikes) {
+        if (raceBikes == null) {
+            throw new IllegalArgumentException("RaceBikes cannot be null");
+        }
+        return this.raceBikes.addAll(raceBikes);
     }
 
     /**
