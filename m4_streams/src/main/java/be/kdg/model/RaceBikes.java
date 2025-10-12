@@ -58,15 +58,10 @@ public class RaceBikes {
             return false;
         }
 
-        Iterator<RaceBike> iterator = raceBikes.iterator();
-        while (iterator.hasNext()) {
-            RaceBike bike = iterator.next();
-            if (bike.getBrand() == brand && bike.getModel().equalsIgnoreCase(model.trim())) {
-                iterator.remove();
-                return true;
-            }
-        }
-        return false;
+        return raceBikes.removeIf(bike ->
+                bike.getBrand() == brand &&
+                        bike.getModel().equalsIgnoreCase(model.trim())
+        );
     }
 
     /**
