@@ -103,7 +103,9 @@ public class Demo4 {
         System.out.println("\n3.1.1 Counting data stream");
         System.out.printf(
                 "Amount of bikes released before 01/01/2021: %d",
-                raceBikes5.getAllRaceBikes().stream().filter(r -> r.getReleaseDate().isBefore(LocalDate.of(2021,1,1))).count()
+                raceBikes5.getAllRaceBikes().stream()
+                        .filter(r -> r.getReleaseDate().isBefore(LocalDate.of(2021,1,1)))
+                        .count()
                 );
 
         //1.2. Sorteer (op 2 attributen!) en druk af
@@ -117,13 +119,18 @@ public class Demo4 {
         //1.3 Zet een attribuut om naar hoofdletters, verwijder de dubbels, sorteer in aflopende volgorde en zet de
         //elementen in één string, gescheiden door komma's.
         System.out.println("\n3.1.3 Converting to uppercase, removing duplicates, sorting in descending order and joining with commas");
-        StringBuilder sb = new StringBuilder();
-        raceBikes5.getAllRaceBikes().stream().map(RaceBike::getBrand).distinct().sorted(Comparator.reverseOrder()).forEach(b -> sb.append(b.name()).append(", "));
-        System.out.println("All race bike brands in uppercase, without duplicates and sorted in descending order: " + sb);
+        String brands = raceBikes5.getAllRaceBikes().stream()
+                .map(r -> r.getBrand().name())
+                .distinct()
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.joining(", "));
+        System.out.println("All race bike brands: " + brands);
 
         //1.4 Filter op een bepaald criterium en pik er eentje uit met findAny
         System.out.println("\n3.1.4 Filtering race bikes by price higher than 10.000 and picking one at random");
-        raceBikes5.getAllRaceBikes().stream().filter(r -> r.getPrice().compareTo(BigDecimal.valueOf(10_000)) > 0).findAny().ifPresent(System.out::println);
+        raceBikes5.getAllRaceBikes().stream()
+                .filter(r -> r.getPrice().compareTo(BigDecimal.valueOf(10_000)) > 0)
+                .findAny().ifPresent(System.out::println);
 
         //1.5 Toon twee kampioenen in een specifiek gebied
         System.out.println("\n3.1.5 Showing two race bikes with the highest properties");
@@ -139,16 +146,24 @@ public class Demo4 {
         //1.6 Filter op een String-criterium, map elk element op een String (bijvoorbeeld op naam), sorteer alfabetisch
         //en collect als een List van String.
         System.out.println("\n3.1.7 Filtering race bikes by model starting with a 'C' and sorting alphabetically");
-        System.out.println(raceBikes5.getAllRaceBikes().stream().map(RaceBike::getModel).filter(model -> model.startsWith("C")).sorted().toList());
+        System.out.println(raceBikes5.getAllRaceBikes().stream()
+                .map(RaceBike::getModel)
+                .filter(model -> model.startsWith("C"))
+                .sorted()
+                .toList());
 
         //1.7 Sorteer op een datum-attribuut en partitioneer in twee groepen (voor/na die datum).
         LocalDate filterDate = LocalDate.of(2021,1,1);
 
         System.out.println("\n3.1.8 Sorting race bikes by release date and partitioning into two groups");
         System.out.println("Race bikes released before " + filterDate + ":");
-        raceBikes5.getAllRaceBikes().stream().filter(r -> r.getReleaseDate().isBefore(filterDate)).forEach(System.out::println);
+        raceBikes5.getAllRaceBikes().stream()
+                .filter(r -> r.getReleaseDate().isBefore(filterDate))
+                .forEach(System.out::println);
         System.out.println("Race bikes released after " + filterDate + ":");
-        raceBikes5.getAllRaceBikes().stream().filter(r -> r.getReleaseDate().isAfter(filterDate)).forEach(System.out::println);
+        raceBikes5.getAllRaceBikes().stream()
+                .filter(r -> r.getReleaseDate().isAfter(filterDate))
+                .forEach(System.out::println);
 
         //1.8 Tenslotte de kers op de taart: groepeer alle objecten in bepaalde categorieën en sorteer de namen
         //alfabetisch binnen elke categorie.

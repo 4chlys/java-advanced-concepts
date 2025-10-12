@@ -2,6 +2,7 @@ package be.kdg.model;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class RaceBikes {
     private Set<RaceBike> raceBikes;
@@ -45,16 +46,7 @@ public class RaceBikes {
         if (raceBike == null) {
             return false;
         }
-
-        Iterator<RaceBike> iterator = raceBikes.iterator();
-        while (iterator.hasNext()) {
-            RaceBike bike = iterator.next();
-            if (bike.equals(raceBike)) {
-                iterator.remove();
-                return true;
-            }
-        }
-        return false;
+        return raceBikes.removeIf(bike -> bike.equals(raceBike));
     }
 
     /**
@@ -85,7 +77,7 @@ public class RaceBikes {
      * - collection.removeIf(bike -> bike.getBrand() == Brand.TREK)
      * - collection.removeIf(bike -> bike.getPrice().compareTo(new BigDecimal("5000")) > 0)
      */
-    public int removeIf(java.util.function.Predicate<RaceBike> predicate) {
+    public int removeIf(Predicate<RaceBike> predicate) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate cannot be null");
         }
@@ -109,12 +101,10 @@ public class RaceBikes {
      */
     public RaceBike search(Brand brand, String model) {
         RaceBike searchBike = new RaceBike(brand, model);
-        for (RaceBike bike : raceBikes) {
-            if (bike.equals(searchBike)) {
-                return bike;
-            }
-        }
-        return null;
+        return raceBikes.stream()
+                .filter(bike -> bike.equals(searchBike))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
