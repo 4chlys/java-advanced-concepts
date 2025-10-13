@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Demo4 {
@@ -142,11 +143,13 @@ public class Demo4 {
 
         raceBikes5.getAllRaceBikes().stream()
                 .max(Comparator.comparing(RaceBike::getPrice))
-                .ifPresent(bike -> System.out.println("Highest price: " + bike));
+                .map(bike -> "Highest price: " + bike)
+                .ifPresent(System.out::println);
 
         raceBikes5.getAllRaceBikes().stream()
                 .max(Comparator.comparing(RaceBike::getWeight))
-                .ifPresent(bike -> System.out.println("Heaviest bike: " + bike));
+                .map(bike -> "Heaviest bike: " + bike)
+                .ifPresent(System.out::println);
 
         //1.6 Filter op een String-criterium, map elk element op een String (bijvoorbeeld op naam), sorteer alfabetisch
         //en collect als een List van String.
@@ -158,32 +161,34 @@ public class Demo4 {
                 .toList());
 
         //1.7 Sorteer op een datum-attribuut en partitioneer in twee groepen (voor/na die datum).
-        LocalDate filterDate = LocalDate.of(2021,1,1);
+        LocalDate filterDate = LocalDate.of(2021, 1, 1);
 
         System.out.println("\n3.1.7 Sorting race bikes by release date and partitioning into two groups");
+        Map<Boolean, List<RaceBike>> partitioned = raceBikes5.getAllRaceBikes().stream()
+                .collect(Collectors.partitioningBy(r -> r.getReleaseDate().isBefore(filterDate)));
+
         System.out.println("Race bikes released before " + filterDate + ":");
-        raceBikes5.getAllRaceBikes().stream()
-                .filter(r -> r.getReleaseDate().isBefore(filterDate))
-                .forEach(System.out::println);
+        partitioned.get(true).forEach(System.out::println);
+
         System.out.println("Race bikes released after " + filterDate + ":");
-        raceBikes5.getAllRaceBikes().stream()
-                .filter(r -> r.getReleaseDate().isAfter(filterDate))
-                .forEach(System.out::println);
+        partitioned.get(false).forEach(System.out::println);
 
         //1.8 Tenslotte de kers op de taart: groepeer alle objecten in bepaalde categorieën en sorteer de namen
         //alfabetisch binnen elke categorie.
         System.out.println("\n3.1.8 Grouping race bikes by frame material and sorting by model");
 
-        Arrays.stream(FrameMaterial.values())
-                .forEach(fm -> {
-                    String models = raceBikes5.getAllRaceBikes().stream()
-                            .filter(r -> r.getFrameMaterial() == fm)
-                            .map(RaceBike::getModel)
-                            .sorted()
-                            .collect(Collectors.joining(", "));
-
-                    System.out.printf("%-11s: %s%n", fm, models);
-                });
+        raceBikes5.getAllRaceBikes().stream()
+                .collect(Collectors.groupingBy(
+                        RaceBike::getFrameMaterial,
+                        Collectors.mapping(
+                                RaceBike::getModel,
+                                Collectors.collectingAndThen(
+                                        Collectors.toList(),
+                                        list -> list.stream().sorted().collect(Collectors.joining(", "))
+                                )
+                        )
+                ))
+                .forEach((fm, models) -> System.out.printf("%-11s: %s%n", fm, models));
 
 
         System.out.println("\n=== DEMO COMPLETED SUCCESSFULLY ===");

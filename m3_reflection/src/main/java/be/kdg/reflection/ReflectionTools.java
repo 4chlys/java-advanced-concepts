@@ -17,7 +17,7 @@ public class ReflectionTools {
      */
     public static void classAnalysis(Class<?>... classes) {
         for (Class<?> aClass : classes) {
-            analyzeClass(aClass);
+            classAnalysis(aClass);
         }
     }
 
@@ -60,7 +60,7 @@ public class ReflectionTools {
      *
      * @param aClass The class to analyze
      */
-    private static void analyzeClass(Class<?> aClass) {
+    private static void classAnalysis(Class<?> aClass) {
         System.out.println("\nAnalyse van de klasse: " + aClass.getSimpleName());
         System.out.println("=".repeat(47));
 
