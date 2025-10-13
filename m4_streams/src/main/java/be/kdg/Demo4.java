@@ -6,6 +6,7 @@ import be.kdg.util.RaceBikeFunctions;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,19 +22,13 @@ public class Demo4 {
         //sorteercriterium.
 
         System.out.println("\n2.2 Testing RaceBikes SortedBy: Sorted by Brand");
-        for (RaceBike raceBike : raceBikes1.sortedBy(RaceBike::getBrand)) {
-            System.out.println(raceBike);
-        }
+        raceBikes1.sortedBy(RaceBike::getBrand).forEach(System.out::println);
 
         System.out.println("\n2.2 Testing RaceBikes SortedBy: Sorted by Model");
-        for (RaceBike raceBike : raceBikes1.sortedBy(RaceBike::getModel)) {
-            System.out.println(raceBike);
-        }
+        raceBikes1.sortedBy(RaceBike::getModel).forEach(System.out::println);
 
         System.out.println("\n2.2 Testing RaceBikes SortedBy: Sorted by Price");
-        for (RaceBike raceBike : raceBikes1.sortedBy(RaceBike::getPrice)){
-            System.out.println(raceBike);
-        }
+        raceBikes1.sortedBy(RaceBike::getPrice).forEach(System.out::println);
 
         // 2.4. In de klasse Demo_4:
         //a. Vraag aan de klasse Data een gevulde List met basisobjecten.
@@ -49,6 +44,16 @@ public class Demo4 {
         List<RaceBike> filteredBrand = RaceBikeFunctions.filteredList(raceBikes2.getAllRaceBikes(),
                 bike -> bike.getBrand() == filterBrand && bike.getColor() == filterColor && bike.getFrameMaterial() == filterFrameMaterial);
         filteredBrand.forEach(System.out::println);
+
+        System.out.println("\nFiltered bikes with price less than 5000:");
+        List<RaceBike> filteredPrice = RaceBikeFunctions.filteredList(raceBikes2.getAllRaceBikes(),
+                bike -> bike.getPrice().compareTo(BigDecimal.valueOf(5000)) < 0);
+        filteredPrice.forEach(System.out::println);
+
+        System.out.println("\nFiltered bikes with weight less than 8kg:");
+        List<RaceBike> filteredWeight = RaceBikeFunctions.filteredList(raceBikes2.getAllRaceBikes(),
+                bike -> bike.getWeight() < 8.0);
+        filteredWeight.forEach(System.out::println);
 
         //2.6. In de klasse Demo_4 ga je deze methode uittesten:
         //a. Vraag aan de klasse Data opnieuw een vers gevulde List met basisobjecten.
@@ -145,7 +150,7 @@ public class Demo4 {
 
         //1.6 Filter op een String-criterium, map elk element op een String (bijvoorbeeld op naam), sorteer alfabetisch
         //en collect als een List van String.
-        System.out.println("\n3.1.7 Filtering race bikes by model starting with a 'C' and sorting alphabetically");
+        System.out.println("\n3.1.6 Filtering race bikes by model starting with a 'C' and sorting alphabetically");
         System.out.println(raceBikes5.getAllRaceBikes().stream()
                 .map(RaceBike::getModel)
                 .filter(model -> model.startsWith("C"))
@@ -155,7 +160,7 @@ public class Demo4 {
         //1.7 Sorteer op een datum-attribuut en partitioneer in twee groepen (voor/na die datum).
         LocalDate filterDate = LocalDate.of(2021,1,1);
 
-        System.out.println("\n3.1.8 Sorting race bikes by release date and partitioning into two groups");
+        System.out.println("\n3.1.7 Sorting race bikes by release date and partitioning into two groups");
         System.out.println("Race bikes released before " + filterDate + ":");
         raceBikes5.getAllRaceBikes().stream()
                 .filter(r -> r.getReleaseDate().isBefore(filterDate))
@@ -167,17 +172,18 @@ public class Demo4 {
 
         //1.8 Tenslotte de kers op de taart: groepeer alle objecten in bepaalde categorieën en sorteer de namen
         //alfabetisch binnen elke categorie.
-        System.out.println("\n3.1.9 Grouping race bikes by frame material and sorting by model");
+        System.out.println("\n3.1.8 Grouping race bikes by frame material and sorting by model");
 
-        for (FrameMaterial fm : FrameMaterial.values()) {
-            String models = raceBikes5.getAllRaceBikes().stream()
-                    .filter(r -> r.getFrameMaterial() == fm)
-                    .map(RaceBike::getModel)
-                    .sorted()
-                    .collect(Collectors.joining(", "));
+        Arrays.stream(FrameMaterial.values())
+                .forEach(fm -> {
+                    String models = raceBikes5.getAllRaceBikes().stream()
+                            .filter(r -> r.getFrameMaterial() == fm)
+                            .map(RaceBike::getModel)
+                            .sorted()
+                            .collect(Collectors.joining(", "));
 
-            System.out.printf("%-11s: %s%n", fm, models);
-        }
+                    System.out.printf("%-11s: %s%n", fm, models);
+                });
 
 
         System.out.println("\n=== DEMO COMPLETED SUCCESSFULLY ===");
