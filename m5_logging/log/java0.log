@@ -1,0 +1,88 @@
+Oct 20, 2025 3:13:54 PM be.kdg.model.RaceBikes add
+FINER: Added RaceBike: CERVELO R5
+Oct 20, 2025 3:13:54 PM be.kdg.model.RaceBikes add
+FINER: Added RaceBike: COLNAGO V4Rs
+Oct 20, 2025 3:13:54 PM be.kdg.model.RaceBikes add
+FINER: Added RaceBike: BIANCHI Oltre XR4
+Oct 20, 2025 3:13:54 PM be.kdg.model.RaceBikes add
+FINER: Added RaceBike: TREK Emonda SLR
+Oct 20, 2025 3:13:54 PM be.kdg.model.RaceBikes remove
+FINER: Removed RaceBike: COLNAGO V4Rs
+Oct 20, 2025 3:13:54 PM be.kdg.model.RaceBikes lambda$remove$1
+FINER: Removed RaceBike: BIANCHI Oltre XR4
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBike setBrand
+SEVERE: Brand cannot be null for UNKNOWN Unknown
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBike setModel
+SEVERE: Model cannot be null or empty for UNKNOWN Unknown
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBike setWeight
+SEVERE: Weight -5.00 cannot be negative for UNKNOWN Unknown
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBike setFrameSize
+SEVERE: FrameSize -10 cannot be negative for UNKNOWN Unknown
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBike setReleaseDate
+SEVERE: ReleaseDate 2078-12-18 is in the future for UNKNOWN Unknown
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBike setPrice
+SEVERE: Price -1000 cannot be negative for UNKNOWN Unknown
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBike setModel
+SEVERE: Model cannot be null or empty for CERVELO R5
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBike setWeight
+SEVERE: Weight -7.50 cannot be negative for CERVELO R5
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBike setReleaseDate
+SEVERE: ReleaseDate 2030-01-01 is in the future for TREK Emonda
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBike setFrameSize
+SEVERE: FrameSize -50 cannot be negative for TREK Emonda
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBikes add
+FINER: Added RaceBike: UNKNOWN Unknown
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBikes add
+FINER: Added RaceBike: CERVELO R5
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBikes add
+FINER: Added RaceBike: TREK Emonda
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBikes add
+FINER: Added RaceBike: CERVELO R5
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBikes add
+FINER: Added RaceBike: COLNAGO V4Rs
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBikes add
+FINER: Added RaceBike: BIANCHI Oltre XR4
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBikes add
+FINER: Added RaceBike: TREK Emonda SLR
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBikes remove
+FINER: Removed RaceBike: COLNAGO V4Rs
+Oct 20, 2025 3:14:44 PM be.kdg.model.RaceBikes lambda$remove$1
+FINER: Removed RaceBike: BIANCHI Oltre XR4
+2025-10-20 15:15:28.023 Level: SEVERE melding: "Brand cannot be null for UNKNOWN Unknown"
+2025-10-20 15:15:28.040 Level: SEVERE melding: "Model cannot be null or empty for UNKNOWN Unknown"
+2025-10-20 15:15:28.055 Level: SEVERE melding: "Weight -5.00 cannot be negative for UNKNOWN Unknown"
+2025-10-20 15:15:28.056 Level: SEVERE melding: "FrameSize -10 cannot be negative for UNKNOWN Unknown"
+2025-10-20 15:15:28.056 Level: SEVERE melding: "ReleaseDate 2078-12-18 is in the future for UNKNOWN Unknown"
+2025-10-20 15:15:28.056 Level: SEVERE melding: "Price -1000 cannot be negative for UNKNOWN Unknown"
+2025-10-20 15:15:28.057 Level: SEVERE melding: "Model cannot be null or empty for CERVELO R5"
+2025-10-20 15:15:28.057 Level: SEVERE melding: "Weight -7.50 cannot be negative for CERVELO R5"
+2025-10-20 15:15:28.058 Level: SEVERE melding: "ReleaseDate 2030-01-01 is in the future for TREK Emonda"
+2025-10-20 15:15:28.058 Level: SEVERE melding: "FrameSize -50 cannot be negative for TREK Emonda"
+2025-10-20 15:15:28.058 Level: FINER melding: "Added RaceBike: UNKNOWN Unknown"
+2025-10-20 15:15:28.059 Level: FINER melding: "Added RaceBike: CERVELO R5"
+2025-10-20 15:15:28.059 Level: FINER melding: "Added RaceBike: TREK Emonda"
+2025-10-20 15:15:28.078 Level: FINER melding: "Added RaceBike: CERVELO R5"
+2025-10-20 15:15:28.078 Level: FINER melding: "Added RaceBike: COLNAGO V4Rs"
+2025-10-20 15:15:28.078 Level: FINER melding: "Added RaceBike: BIANCHI Oltre XR4"
+2025-10-20 15:15:28.078 Level: FINER melding: "Added RaceBike: TREK Emonda SLR"
+2025-10-20 15:15:28.079 Level: FINER melding: "Removed RaceBike: COLNAGO V4Rs"
+2025-10-20 15:15:28.080 Level: FINER melding: "Removed RaceBike: BIANCHI Oltre XR4"
+2025-10-20 15:17:13.672 Level: SEVERE melding: "Brand cannot be null for UNKNOWN Unknown"
+2025-10-20 15:17:13.693 Level: SEVERE melding: "Model cannot be null or empty for UNKNOWN Unknown"
+2025-10-20 15:17:13.712 Level: SEVERE melding: "Weight -5.00 cannot be negative for UNKNOWN Unknown"
+2025-10-20 15:17:13.713 Level: SEVERE melding: "FrameSize -10 cannot be negative for UNKNOWN Unknown"
+2025-10-20 15:17:13.713 Level: SEVERE melding: "ReleaseDate 2078-12-18 is in the future for UNKNOWN Unknown"
+2025-10-20 15:17:13.714 Level: SEVERE melding: "Price -1000 cannot be negative for UNKNOWN Unknown"
+2025-10-20 15:17:13.714 Level: SEVERE melding: "Model cannot be null or empty for CERVELO R5"
+2025-10-20 15:17:13.715 Level: SEVERE melding: "Weight -7.50 cannot be negative for CERVELO R5"
+2025-10-20 15:17:13.716 Level: SEVERE melding: "ReleaseDate 2030-01-01 is in the future for TREK Emonda"
+2025-10-20 15:17:13.716 Level: SEVERE melding: "FrameSize -50 cannot be negative for TREK Emonda"
+2025-10-20 15:17:13.717 Level: FINER melding: "Added RaceBike: UNKNOWN Unknown"
+2025-10-20 15:17:13.717 Level: FINER melding: "Added RaceBike: CERVELO R5"
+2025-10-20 15:17:13.718 Level: FINER melding: "Added RaceBike: TREK Emonda"
+2025-10-20 15:17:13.738 Level: FINER melding: "Added RaceBike: CERVELO R5"
+2025-10-20 15:17:13.739 Level: FINER melding: "Added RaceBike: COLNAGO V4Rs"
+2025-10-20 15:17:13.739 Level: FINER melding: "Added RaceBike: BIANCHI Oltre XR4"
+2025-10-20 15:17:13.739 Level: FINER melding: "Added RaceBike: TREK Emonda SLR"
+2025-10-20 15:17:13.741 Level: FINER melding: "Removed RaceBike: COLNAGO V4Rs"
+2025-10-20 15:17:13.742 Level: FINER melding: "Removed RaceBike: BIANCHI Oltre XR4"

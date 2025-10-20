@@ -86,19 +86,18 @@ class RaceBikesTest {
 
     @Test
     void testSortByBrand() {
-        // 2.2.e Voorzie een methode om het sorteren te testen. Gebruik assertAll om een 3-tal posities te
-        //controleren.
-        List<RaceBike> sorted = raceBikes.sortedBy(RaceBike::getBrand);
+        List<RaceBike> sorted = raceBikes.sortedBy(b -> b.getBrand().name());
 
         assertAll("Sorted by brand",
                 () -> assertEquals(Brand.BIANCHI, sorted.get(0).getBrand(),
                         "First bike should be BIANCHI"),
-                () -> assertEquals(Brand.COLNAGO, sorted.get(1).getBrand(),
-                        "Second bike should be COLNAGO"),
+                () -> assertEquals(Brand.CERVELO, sorted.get(1).getBrand(),
+                        "Second bike should be CERVELO"),
                 () -> assertEquals(Brand.TREK, sorted.get(4).getBrand(),
                         "Last bike should be TREK")
         );
     }
+
 
     @Test
     void testSortByPrice() {

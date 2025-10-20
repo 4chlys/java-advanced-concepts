@@ -2,6 +2,7 @@ package be.kdg;
 
 import be.kdg.model.*;
 
+import java.io.File;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,6 +13,9 @@ public class Demo5 {
         // 3.6 Vanuit de main in Demo_5 zorg je ervoor dat het
         //configuratiebestand logging.properties geladen wordt.
         try {
+            File logDir = new File("log");
+            if (!logDir.exists()) logDir.mkdirs();
+
             InputStream inputStream = Demo5.class.getResourceAsStream("/logging.properties");
             if (inputStream != null) {
                 LogManager.getLogManager().readConfiguration(inputStream);
@@ -29,14 +33,20 @@ public class Demo5 {
         //logging te testen.
         System.out.println("Creating bikes with invalid data...\n");
 
+        RaceBikes rb = new RaceBikes();
+
+        System.out.println("--- Testing null values ---");
         RaceBike bike1 = new RaceBike();
         bike1.setBrand(null);
         bike1.setModel("");
+
+        System.out.println("--- Testing negative or incorrect values ---");
         bike1.setWeight(-5.0);
         bike1.setFrameSize(-10);
         bike1.setReleaseDate(LocalDate.of(2078, 12, 18));
         bike1.setPrice(BigDecimal.valueOf(-1000));
 
+        System.out.println("--- Testing incorrect setters for valid objects ---");
         RaceBike bike2 = new RaceBike(Brand.CERVELO, "R5");
         bike2.setModel(null);
         bike2.setWeight(-7.5);
@@ -45,6 +55,14 @@ public class Demo5 {
         bike3.setReleaseDate(LocalDate.of(2030, 1, 1));
         bike3.setFrameSize(-50);
 
+        rb.add(bike1);
+        rb.add(bike2);
+        rb.add(bike3);
+
+        System.out.println("--- Printing current collection ---");
+
+        System.out.println(rb);
+
         System.out.println("\n=== TESTING LOGGING WITH ADD/REMOVE ===\n");
 
         // 3.6 Test nu in de main het toevoegen en verwijderen in de multiklasse uit.
@@ -52,7 +70,7 @@ public class Demo5 {
         //bekijk de aangemaakte logfiles; dat zouden er max 4 mogen zijn.
         //Controleer de inhoud van de logfiles: zowel de FINER als de SEVERE meldingen moeten hierin gelogd
         //worden.
-        RaceBikes collection = new RaceBikes();
+        RaceBikes rb2 = new RaceBikes();
 
         RaceBike validBike1 = new RaceBike(Brand.CERVELO, "R5", Color.BLACK, 7.2, 56,
                 LocalDate.of(2023, 1, 15), BigDecimal.valueOf(12000), Currency.EUR,
@@ -74,17 +92,21 @@ public class Demo5 {
                 Groupset.SHIMANO_DURA_ACE_MECHANICAL, FrameMaterial.CARBON, ForkMaterial.CARBON,
                 BrakeType.RIM_CALIPER, WheelSize.ROAD_700C);
 
-        System.out.println("Adding bikes to collection...");
-        collection.add(validBike1);
-        collection.add(validBike2);
-        collection.add(validBike3);
-        collection.add(validBike4);
+        System.out.println("\nCurrent collection size: " + rb2.getSize());
+
+        System.out.println("\nAdding bikes to collection...");
+        rb2.add(validBike1);
+        rb2.add(validBike2);
+        rb2.add(validBike3);
+        rb2.add(validBike4);
+
+        System.out.println("\nCurrent collection size: " + rb2.getSize());
 
         System.out.println("\nRemoving bikes from collection...");
-        collection.remove(validBike2);
-        collection.remove(Brand.BIANCHI, "Oltre XR4");
+        rb2.remove(validBike2);
+        rb2.remove(Brand.BIANCHI, "Oltre XR4");
 
-        System.out.println("\nCurrent collection size: " + collection.getSize());
+        System.out.println("\nCurrent collection size: " + rb2.getSize());
 
         System.out.println("\n=== DEMO COMPLETED ===");
         System.out.println("Check the log directory for log files with SEVERE and FINER messages");
