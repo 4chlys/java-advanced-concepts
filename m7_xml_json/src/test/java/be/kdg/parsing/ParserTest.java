@@ -5,9 +5,9 @@ import be.kdg.model.RaceBike;
 import be.kdg.model.RaceBikes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ParserTest {
 
     private RaceBikes raceBikes;
+    private static final Path DATA_DIR = Paths.get("datafiles");
 
     @BeforeEach
     void setUp() {
@@ -27,8 +28,8 @@ class ParserTest {
     }
 
     @Test
-    void testStaxDom(@TempDir Path tempDir) throws Exception {
-        Path xmlFile = tempDir.resolve("staxRaceBikes.xml");
+    void testStaxDom() throws Exception {
+        Path xmlFile = DATA_DIR.resolve("staxRaceBikes.xml");
 
         RaceBikesStaxParser staxParser = new RaceBikesStaxParser(raceBikes, xmlFile.toString());
         assertDoesNotThrow(staxParser::staxWriteXML, "StAX writer should not throw");
@@ -55,8 +56,8 @@ class ParserTest {
     }
 
     @Test
-    void testJaxb(@TempDir Path tempDir) {
-        Path xmlFile = tempDir.resolve("jaxbRaceBikes.xml");
+    void testJaxb() {
+        Path xmlFile = DATA_DIR.resolve("jaxbRaceBikes.xml");
 
         assertDoesNotThrow(() -> RaceBikesJaxbParser.JaxbWriteXml(xmlFile.toString(), raceBikes),
                 "JAXB write should not throw");
@@ -79,8 +80,8 @@ class ParserTest {
     }
 
     @Test
-    void testGson(@TempDir Path tempDir) {
-        Path jsonFile = tempDir.resolve("gsonRaceBikes.json");
+    void testGson() {
+        Path jsonFile = DATA_DIR.resolve("gsonRaceBikes.json");
 
         assertDoesNotThrow(() -> RaceBikesGsonParser.writeJson(raceBikes, jsonFile.toString()));
 
