@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class RaceBikesDomParser {
-
     public static RaceBikes domReadXML(String fileName) {
         RaceBikes raceBikes = new RaceBikes();
 
@@ -27,33 +26,72 @@ public class RaceBikesDomParser {
                 Element element = (Element) nodeList.item(i);
 
                 Brand brand = Brand.valueOf(element.getAttribute("brand").toUpperCase());
-                String model = getElementText(element, "model");
-                String colorStr = element.getElementsByTagName("color").item(0).getTextContent();
-                Color color;
-                try {
-                    color = Color.valueOf(colorStr.toUpperCase());
-                } catch (IllegalArgumentException e) {
-                    color = Color.WHITE;
+                String model = null;
+                Color color = Color.WHITE;
+                double weight = 0;
+                int frameSize = 0;
+                LocalDate releaseDate = null;
+                BigDecimal price = BigDecimal.ZERO;
+                Currency currency = Currency.EUR;
+                Groupset groupset = null;
+                FrameMaterial frameMaterial = null;
+                ForkMaterial forkMaterial = null;
+                BrakeType brakeType = null;
+                WheelSize wheelSize = null;
+
+                // Iterate only over direct child nodes
+                for (int j = 0; j < element.getChildNodes().getLength(); j++) {
+                    if (!(element.getChildNodes().item(j) instanceof Element)) continue;
+                    Element child = (Element) element.getChildNodes().item(j);
+                    String tag = child.getTagName();
+                    String text = child.getTextContent().trim();
+
+                    switch (tag) {
+                        case "model" -> model = text;
+                        case "color" -> {
+                            try {
+                                color = Color.valueOf(text.toUpperCase());
+                            } catch (IllegalArgumentException ignored) {
+                            }
+                        }
+                        case "weight" -> weight = Double.parseDouble(text);
+                        case "frame-size" -> frameSize = Integer.parseInt(text);
+                        case "release-date" -> releaseDate = LocalDate.parse(text);
+                        case "price" -> price = new BigDecimal(text);
+                        case "currency" -> currency = Currency.valueOf(text.toUpperCase());
+                        case "groupset" -> {
+                            try {
+                                String gs = text.toUpperCase().replace("-", "_").replace(" ", "_");
+                                groupset = Groupset.valueOf(gs);
+                            } catch (IllegalArgumentException ignored) {
+                            }
+                        }
+                        case "frame-material" -> {
+                            try {
+                                frameMaterial = FrameMaterial.valueOf(text.toUpperCase());
+                            } catch (IllegalArgumentException ignored) {
+                            }
+                        }
+                        case "fork-material" -> {
+                            try {
+                                forkMaterial = ForkMaterial.valueOf(text.toUpperCase());
+                            } catch (IllegalArgumentException ignored) {
+                            }
+                        }
+                        case "brake-type" -> {
+                            try {
+                                brakeType = BrakeType.valueOf(text.toUpperCase());
+                            } catch (IllegalArgumentException ignored) {
+                            }
+                        }
+                        case "wheel-size" -> {
+                            try {
+                                wheelSize = WheelSize.valueOf(text.toUpperCase());
+                            } catch (IllegalArgumentException ignored) {
+                            }
+                        }
+                    }
                 }
-                double weight = Double.parseDouble(getElementText(element, "weight"));
-                int frameSize = Integer.parseInt(getElementText(element, "frame-size"));
-                LocalDate releaseDate = LocalDate.parse(getElementText(element, "release-date"));
-                BigDecimal price = new BigDecimal(getElementText(element, "price"));
-                Currency currency = Currency.valueOf(getElementText(element, "currency").toUpperCase());
-                String groupsetStr = getElementText(element, "groupset")
-                        .toUpperCase()
-                        .replace("-", "_")
-                        .replace(" ", "_");
-                Groupset groupset;
-                try {
-                    groupset = Groupset.valueOf(groupsetStr);
-                } catch (IllegalArgumentException e) {
-                    groupset = null;
-                }
-                FrameMaterial frameMaterial = hasElement(element, "frame-material") ? FrameMaterial.valueOf(getElementText(element, "frame-material").toUpperCase()) : null;
-                ForkMaterial forkMaterial = hasElement(element, "fork-material") ? ForkMaterial.valueOf(getElementText(element, "fork-material").toUpperCase()) : null;
-                BrakeType brakeType = hasElement(element, "brake-type") ? BrakeType.valueOf(getElementText(element, "brake-type").toUpperCase()) : null;
-                WheelSize wheelSize = hasElement(element, "wheel-size") ? WheelSize.valueOf(getElementText(element, "wheel-size").toUpperCase()) : null;
 
                 RaceBike raceBike = new RaceBike(
                         brand, model, color, weight, frameSize, releaseDate,
@@ -69,13 +107,5 @@ public class RaceBikesDomParser {
         }
 
         return raceBikes;
-    }
-
-    private static String getElementText(Element parent, String tagName) {
-        return parent.getElementsByTagName(tagName).item(0).getTextContent().trim();
-    }
-
-    private static boolean hasElement(Element parent, String tagName) {
-        return parent.getElementsByTagName(tagName).getLength() > 0;
     }
 }

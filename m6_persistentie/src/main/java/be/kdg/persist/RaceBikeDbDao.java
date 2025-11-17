@@ -15,7 +15,7 @@ public class RaceBikeDbDao implements RaceBikeDao {
 
     public RaceBikeDbDao(String databasePath) {
         connect(databasePath);
-        init();
+        createTable();
     }
 
     private void connect(String databasePath) {
@@ -28,7 +28,7 @@ public class RaceBikeDbDao implements RaceBikeDao {
         }
     }
 
-    private void init() {
+    private void createTable() {
         try {
             Statement statement = connection.createStatement();
             statement.execute("DROP TABLE IF EXISTS racebikesdb");
