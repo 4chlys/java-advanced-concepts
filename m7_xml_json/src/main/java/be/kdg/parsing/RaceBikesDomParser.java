@@ -39,7 +39,6 @@ public class RaceBikesDomParser {
                 BrakeType brakeType = null;
                 WheelSize wheelSize = null;
 
-                // Iterate only over direct child nodes
                 for (int j = 0; j < element.getChildNodes().getLength(); j++) {
                     if (!(element.getChildNodes().item(j) instanceof Element)) continue;
                     Element child = (Element) element.getChildNodes().item(j);
