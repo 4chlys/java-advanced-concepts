@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<race-bikes>
+    <race-bike brand="SPECIALIZED">
+        <model>S-Works Tarmac SL7</model>
+        <color>RED</color>
+        <weight>6.8</weight>
+        <frame-size>56</frame-size>
+        <release-date>2021-03-15</release-date>
+        <price>12500</price>
+        <currency>EUR</currency>
+        <groupset>SHIMANO_DURA_ACE_Di2</groupset>
+        <frame-material>CARBON</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>DISC_HYDRAULIC</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="PINARELLO">
+        <model>Dogma F12</model>
+        <color>BLUE</color>
+        <weight>7.2</weight>
+        <frame-size>54</frame-size>
+        <release-date>2020-08-10</release-date>
+        <price>11800</price>
+        <currency>EUR</currency>
+        <groupset>CAMPAGNOLO_SUPER_RECORD_EPS</groupset>
+        <frame-material>CARBON</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>RIM_CALIPER</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="CERVELO">
+        <model>S5</model>
+        <color>BLACK</color>
+        <weight>7.5</weight>
+        <frame-size>58</frame-size>
+        <release-date>2022-01-20</release-date>
+        <price>9500</price>
+        <currency>EUR</currency>
+        <groupset>SRAM_RED_ETAP_AXS</groupset>
+        <frame-material>CARBON</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>DISC_HYDRAULIC</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="CANYON">
+        <model>Ultimate CF SL 8.0</model>
+        <color>WHITE</color>
+        <weight>8.1</weight>
+        <frame-size>56</frame-size>
+        <release-date>2021-06-05</release-date>
+        <price>3200</price>
+        <currency>EUR</currency>
+        <groupset>SHIMANO_ULTEGRA_Di2</groupset>
+        <frame-material>CARBON</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>DISC_HYDRAULIC</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="GIANT">
+        <model>TCR Advanced Pro 1</model>
+        <color>ORANGE</color>
+        <weight>7.8</weight>
+        <frame-size>54</frame-size>
+        <release-date>2022-04-12</release-date>
+        <price>4500</price>
+        <currency>EUR</currency>
+        <groupset>SHIMANO_ULTEGRA_MECHANICAL</groupset>
+        <frame-material>CARBON</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>DISC_MECHANICAL</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="TREK">
+        <model>Emonda SL 6</model>
+        <color>GREEN</color>
+        <weight>8.5</weight>
+        <frame-size>52</frame-size>
+        <release-date>2021-09-18</release-date>
+        <price>3800</price>
+        <currency>EUR</currency>
+        <groupset>SHIMANO_105</groupset>
+        <frame-material>CARBON</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>DISC_HYDRAULIC</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="SPECIALIZED">
+        <model>Crux Expert</model>
+        <color>BROWN</color>
+        <weight>8.9</weight>
+        <frame-size>56</frame-size>
+        <release-date>2022-02-28</release-date>
+        <price>4200</price>
+        <currency>EUR</currency>
+        <groupset>SHIMANO_GRX_810</groupset>
+        <frame-material>CARBON</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>DISC_HYDRAULIC</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="CANYON">
+        <model>Grail CF SL 7.0</model>
+        <color>PURPLE</color>
+        <weight>9.2</weight>
+        <frame-size>58</frame-size>
+        <release-date>2021-11-08</release-date>
+        <price>2800</price>
+        <currency>EUR</currency>
+        <groupset>SHIMANO_GRX_600</groupset>
+        <frame-material>CARBON</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>DISC_HYDRAULIC</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="CUBE">
+        <model>Attain Race</model>
+        <color>BLUE</color>
+        <weight>9.8</weight>
+        <frame-size>56</frame-size>
+        <release-date>2021-07-22</release-date>
+        <price>1200</price>
+        <currency>EUR</currency>
+        <groupset>SHIMANO_TIAGRA</groupset>
+        <frame-material>ALUMINIUM</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>RIM_CALIPER</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="MERIDA">
+        <model>Scultura 400</model>
+        <color>RED</color>
+        <weight>10.2</weight>
+        <frame-size>54</frame-size>
+        <release-date>2020-12-03</release-date>
+        <price>950</price>
+        <currency>EUR</currency>
+        <groupset>SHIMANO_SORA</groupset>
+        <frame-material>ALUMINIUM</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>RIM_CALIPER</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="CERVELO">
+        <model>P5</model>
+        <color>BLACK</color>
+        <weight>8.8</weight>
+        <frame-size>56</frame-size>
+        <release-date>2021-05-14</release-date>
+        <price>8500</price>
+        <currency>EUR</currency>
+        <groupset>SHIMANO_DURA_ACE_MECHANICAL</groupset>
+        <frame-material>CARBON</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>RIM_CALIPER</brake-type>
+        <wheel-size>TIME_TRIAL_650C</wheel-size>
+    </race-bike>
+    <race-bike brand="COLNAGO">
+        <model>Master X-Light</model>
+        <color>WHITE</color>
+        <weight>11.5</weight>
+        <frame-size>58</frame-size>
+        <release-date>2019-10-30</release-date>
+        <price>2800</price>
+        <currency>EUR</currency>
+        <groupset>CAMPAGNOLO_CHORUS</groupset>
+        <frame-material>STEEL</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>RIM_CALIPER</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="WILIER">
+        <model>Zero SLR</model>
+        <color>YELLOW</color>
+        <weight>7.1</weight>
+        <frame-size>54</frame-size>
+        <release-date>2022-06-08</release-date>
+        <price>6800</price>
+        <currency>EUR</currency>
+        <groupset>CAMPAGNOLO_SUPER_RECORD_MECHANICAL</groupset>
+        <frame-material>CARBON</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>DISC_HYDRAULIC</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="SCOTT">
+        <model>Addict RC Pro</model>
+        <color>ORANGE</color>
+        <weight>7.9</weight>
+        <frame-size>56</frame-size>
+        <release-date>2021-12-17</release-date>
+        <price>5200</price>
+        <currency>EUR</currency>
+        <groupset>SHIMANO_ULTEGRA_MECHANICAL</groupset>
+        <frame-material>CARBON</frame-material>
+        <fork-material>CARBON</fork-material>
+        <brake-type>DISC_HYDRAULIC</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+    <race-bike brand="GIANT">
+        <model>Contend 3</model>
+        <color>BLUE</color>
+        <weight>11.8</weight>
+        <frame-size>52</frame-size>
+        <release-date>2020-04-25</release-date>
+        <price>650</price>
+        <currency>EUR</currency>
+        <groupset>SHIMANO_CLARIS</groupset>
+        <frame-material>ALUMINIUM</frame-material>
+        <fork-material>STEEL</fork-material>
+        <brake-type>RIM_CALIPER</brake-type>
+        <wheel-size>ROAD_700C</wheel-size>
+    </race-bike>
+</race-bikes>
