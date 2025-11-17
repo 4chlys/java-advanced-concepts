@@ -106,7 +106,8 @@ public class RaceBikeDbDaoTest {
     @Test
     void testSort() {
         List<RaceBike> dataList = Data.getData();
-        dataList.sort(Comparator.comparing(RaceBike::getBrand));
+        dataList.sort(Comparator.comparing((RaceBike rb) -> rb.getBrand().name())
+                .thenComparing(RaceBike::getModel));
 
         List<RaceBike> dbList = dao.sortedOnBrand();
 

@@ -123,9 +123,6 @@ public class RaceBike implements Comparable<RaceBike>, Serializable {
 
     // Setters
     public void setId(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("id cannot be negative");
-        }
         this.id = id;
     }
 

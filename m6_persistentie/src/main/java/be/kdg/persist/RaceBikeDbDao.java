@@ -33,7 +33,7 @@ public class RaceBikeDbDao implements RaceBikeDao {
             Statement statement = connection.createStatement();
             statement.execute("DROP TABLE IF EXISTS racebikesdb");
             String createQuery = "CREATE TABLE racebikesdb " +
-                    "(id INTEGER NOT NULL IDENTITY PRIMARY KEY," +
+                    "(id INTEGER IDENTITY PRIMARY KEY," +
                     "brand VARCHAR(20) NOT NULL, " +
                     "model VARCHAR(50) NOT NULL," +
                     "color VARCHAR(15)," +
