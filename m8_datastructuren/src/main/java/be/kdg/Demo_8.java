@@ -42,7 +42,7 @@ public class Demo_8 {
 
         // 4.6 Test Selection Sort
         System.out.println("--- Testing Selection Sort (30 items) ---");
-        //Kollections.selectionSort(test);
+        Kollections.selectionSort(test);
         for (int i = 0; i < test.size(); i++) {
             System.out.println(test.get(i));
         }
@@ -50,7 +50,7 @@ public class Demo_8 {
         // 4.6 Test Merge Sort
         System.out.println("\n--- Testing Merge Sort (30 items) ---");
         test = PerformanceTester.randomList(30);
-        //Kollections.mergeSort(test);
+        Kollections.mergeSort(test);
         for (int i = 0; i < test.size(); i++) {
             System.out.println(test.get(i));
         }
@@ -64,8 +64,8 @@ public class Demo_8 {
         }
 
         // 4.8 Run Performance Tests (Copy output to Excel)
-        //PerformanceTester.testSelectionSort();
-        //PerformanceTester.testMergeSort();
+        PerformanceTester.testSelectionSort();
+        PerformanceTester.testMergeSort();
 
         // 4.11 Test Linear vs Binary Search
         System.out.println("\n--- Testing Search ---");
