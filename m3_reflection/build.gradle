@@ -3,7 +3,7 @@ plugins {
     id 'application'
 }
 
-group = 'be.kdg.java2'
+group = 'be.kdg.java'
 version = '1.0-SNAPSHOT'
 
 java {
