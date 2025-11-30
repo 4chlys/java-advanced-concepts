@@ -1,8 +1,5 @@
 package be.kdg.kollections.lists;
 
-
-import be.kdg.kollections.Kollections;
-
 public class LinkedList<E> implements List<E> {
     static class Node<V> {
         V value;
@@ -48,22 +45,34 @@ public class LinkedList<E> implements List<E> {
 
     @Override
     public boolean remove(E element) {
-        int index = Kollections.lineairSearch(this, element);
-        if (index!=-1) {
-            remove(index);
+        if (root == null) return false;
+
+        if (root.value.equals(element)) {
+            root = root.next;
+            size--;
             return true;
+        }
+
+        Node<E> current = root;
+        while (current.next != null) {
+            if (current.next.value.equals(element)) {
+                current.next = current.next.next;
+                size--;
+                return true;
+            }
+            current = current.next;
         }
         return false;
     }
 
     @Override
     public boolean contains(E element) {
-        return indexOf(element)!=-1;
+        return indexOf(element) != -1;
     }
 
     @Override
     public void set(int index, E element) {
-        if (index > this.size || index < 0) {
+        if (index >= this.size || index < 0) {
             throw new IndexOutOfBoundsException("index: " + index + ", size: " + size);
         }
         Node<E> node = root;
@@ -102,7 +111,16 @@ public class LinkedList<E> implements List<E> {
 
     @Override
     public int indexOf(E element) {
-        return Kollections.lineairSearch(this, element);
+        Node<E> current = root;
+        int index = 0;
+        while (current != null) {
+            if (current.value.equals(element)) {
+                return index;
+            }
+            current = current.next;
+            index++;
+        }
+        return -1;
     }
 
     @Override
@@ -111,10 +129,8 @@ public class LinkedList<E> implements List<E> {
             throw new IndexOutOfBoundsException("index: " + index + ", size: " + size);
         }
         Node<E> node = root;
-        if (index != 0) {
-            for (int i = 0; i < index; i++) {
-                node = node.next;
-            }
+        for (int i = 0; i < index; i++) {
+            node = node.next;
         }
         return node.value;
     }
