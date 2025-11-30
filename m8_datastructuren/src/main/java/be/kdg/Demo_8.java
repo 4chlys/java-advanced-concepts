@@ -1,5 +1,6 @@
 package be.kdg;
 
+import be.kdg.kollections.lists.List;
 import be.kdg.model.*;
 import be.kdg.kollections.*;
 import java.util.stream.Stream;

@@ -1,9 +1,9 @@
 package be.kdg;
 
-import be.kdg.kollections.ArrayList;
+import be.kdg.kollections.lists.ArrayList;
 import be.kdg.kollections.Kollections;
-import be.kdg.kollections.LinkedList;
-import be.kdg.kollections.List;
+import be.kdg.kollections.lists.LinkedList;
+import be.kdg.kollections.lists.List;
 import be.kdg.model.RaceBike;
 import be.kdg.model.RaceBikeFactory;
 

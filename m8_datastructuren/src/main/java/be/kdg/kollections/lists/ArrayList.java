@@ -1,4 +1,6 @@
-package be.kdg.kollections;
+package be.kdg.kollections.lists;
+
+import be.kdg.kollections.Kollections;
 
 public class ArrayList<E> implements List<E> {
     private static final int INITIAL_CAPACITY = 10;
@@ -6,13 +8,17 @@ public class ArrayList<E> implements List<E> {
     private int size;
 
     public ArrayList() {
-        elements = new Object[INITIAL_CAPACITY];
+        this(INITIAL_CAPACITY);
+    }
+
+    public ArrayList(int capacity) {
+        elements = new Object[capacity];
         size = 0;
     }
 
     private void expand() {
         Object[] newElements = new Object[elements.length * 2];
-        System.arraycopy(elements, 0, newElements, 0, size);
+        System.arraycopy(elements, 0, newElements, 0, elements.length);
         elements = newElements;
     }
 
@@ -24,9 +30,7 @@ public class ArrayList<E> implements List<E> {
         if (size == elements.length) {
             expand();
         }
-        for (int i = size; i > index; i--) {
-            elements[i] = elements[i-1];
-        }
+        if (size - index >= 0) System.arraycopy(elements, index, elements, index + 1, size - index);
         elements[index] = element;
         size++;
     }
@@ -37,8 +41,28 @@ public class ArrayList<E> implements List<E> {
     }
 
     @Override
+    public boolean remove(E element) {
+        int index = Kollections.lineairSearch(this, element);
+        if (index!=-1) {
+            remove(index);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean contains(E element) {
+        return indexOf(element)!=-1;
+    }
+
+    @Override
+    public int indexOf(E element) {
+        return Kollections.lineairSearch(this, element);
+    }
+
+    @Override
     public void set(int index, E element) {
-        if (index >= this.size || index < 0) {
+        if (index > this.size || index < 0) {
             throw new IndexOutOfBoundsException("index: " + index + ", size: " + size);
         }
         elements[index] = element;
@@ -56,9 +80,8 @@ public class ArrayList<E> implements List<E> {
             throw new IndexOutOfBoundsException("index: " + index + ", size: " + size);
         }
         E oldValue = (E) elements[index];
-        for (int i = index; i < size - 1; i++) {
-            elements[i] = elements[i + 1];
-        }
+
+        if (size - 1 - index >= 0) System.arraycopy(elements, index + 1, elements, index, size - 1 - index);
         size--;
         return oldValue;
     }

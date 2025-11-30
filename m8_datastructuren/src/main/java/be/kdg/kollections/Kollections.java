@@ -1,5 +1,8 @@
 package be.kdg.kollections;
 
+import be.kdg.kollections.lists.ArrayList;
+import be.kdg.kollections.lists.List;
+
 public class Kollections {
     private Kollections() {}
 
