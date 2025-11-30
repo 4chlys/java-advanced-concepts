@@ -38,11 +38,12 @@ public class Demo_8 {
                 .sorted()
                 .forEach(System.out::println);
 
-//        System.out.println("\n=== ARRAYLIST VS LINKEDLIST PERFORMANCE ===");
-//        PerformanceTester.compareArrayListAndLinkedList(20000);
 
         System.out.println("\n=== KOLLECTIONS DEMO ===\n");
         List<RaceBike> test = PerformanceTester.randomList(30);
+
+        //System.out.println("\n--- ArrayList VS LinkedList Performance ---");
+        // PerformanceTester.compareArrayListAndLinkedList(20000);
 
         // 4.6 Test Selection Sort
         System.out.println("--- Testing Selection Sort (30 items) ---");
@@ -86,5 +87,9 @@ public class Demo_8 {
         System.out.println("\nSearching for non-existing bike...");
         System.out.println("Linear Index: " + Kollections.lineairSearch(searchList, nonExistingElement));
         System.out.println("Binary Index: " + Kollections.binarySearch(searchList, nonExistingElement));
+
+        // 5.8 Test Performance of HashMap and ListMap implementation
+        System.out.println("\n--- HashMap vs ListMap Performance ---");
+        PerformanceTester.compareListMapToHashMap(1000);
     }
 }

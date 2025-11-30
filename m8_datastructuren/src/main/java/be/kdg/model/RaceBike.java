@@ -25,6 +25,7 @@ public class RaceBike implements Comparable<RaceBike> {
     private WheelSize wheelSize;
 
     public static int compareCounter = 0;
+    public static int equalsCounter = 0;
 
     RaceBike(Brand brand, String model, Color color, double weight, int frameSize, LocalDate releaseDate, BigDecimal price, Currency currency, Groupset groupset, FrameMaterial frameMaterial, ForkMaterial forkMaterial, BrakeType brakeType, WheelSize wheelSize) {
         setBrand(brand);
@@ -187,6 +188,7 @@ public class RaceBike implements Comparable<RaceBike> {
      */
     @Override
     public boolean equals(Object obj) {
+        equalsCounter++;
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
 

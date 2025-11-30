@@ -4,6 +4,8 @@ import be.kdg.kollections.lists.ArrayList;
 import be.kdg.kollections.Kollections;
 import be.kdg.kollections.lists.LinkedList;
 import be.kdg.kollections.lists.List;
+import be.kdg.kollections.maps.HashMap;
+import be.kdg.kollections.maps.ListMap;
 import be.kdg.kollections.maps.Map;
 import be.kdg.model.RaceBike;
 import be.kdg.model.RaceBikeFactory;
@@ -82,10 +84,44 @@ public class PerformanceTester {
     }
 
     public static void compareListMapToHashMap(int size) {
+        Map<Object, Object> hashMap = fillMap(true, size);
+        Map<Object, Object> listMap = fillMap(false, size);
 
+        long startHash = System.nanoTime();
+        for (int i = 0; i < size; i++) {
+            RaceBike.equalsCounter = 0;
+            hashMap.get("bike" + i);
+        }
+        long endHash = System.nanoTime();
+
+        System.out.println("HashMap: n = " + size + ", equalscount = " + RaceBike.equalsCounter + ", nanosec = " + (endHash - startHash));
+
+        long startList = System.nanoTime();
+        for (int i = 0; i < size; i++) {
+            RaceBike.equalsCounter = 0;
+            listMap.get("bike" + i);
+        }
+        long endList = System.nanoTime();
+
+        System.out.println("ListMap: n = " + size + ", equalscount = " + RaceBike.equalsCounter + ", nanosec = " + (endList - startList));
     }
 
-    private static Map fillMap(int size) {
-
+    private static Map<Object, Object> fillMap(boolean useHashMap, int size) {
+        if (useHashMap) {
+            Map<Object, Object> map = new HashMap<>();
+            for (int i = 0; i < size; i++) {
+                RaceBike bike = RaceBikeFactory.newEmptyRaceBike();
+                bike.setModel("bike" + i);
+                map.put(bike.getModel(), "This is bike " + bike.getModel());
+            }
+            return map;
+        };
+        Map<Object, Object> map = new ListMap<>();
+        for (int i = 0; i < size; i++) {
+            RaceBike bike = RaceBikeFactory.newEmptyRaceBike();
+            bike.setModel("bike" + i);
+            map.put(bike.getModel(), "This is bike " + bike.getModel());
+        }
+        return map;
     }
 }

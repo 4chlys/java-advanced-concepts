@@ -28,7 +28,19 @@ public class TreeSet<T extends Comparable<T>> implements Set<T> {
     }
 
     private void add(TreeNode<T> parent, T value) {
-        //TODO verder uitwerken
+        if (value.compareTo(parent.value) < 0) {
+            if (parent.left == null) {
+                parent.left = new TreeNode<>(value);
+            } else {
+                add(parent.left, value);
+            }
+        } else {
+            if (parent.right == null) {
+                parent.right = new TreeNode<>(value);
+            } else {
+                add(parent.right, value);
+            }
+        }
 
     }
 
@@ -39,7 +51,6 @@ public class TreeSet<T extends Comparable<T>> implements Set<T> {
         return list;
     }
 
-    //inorder!
     private void addToList(List<T> list, TreeNode<T> node) {
         if (node.left!=null) {
             addToList(list, node.left);
@@ -53,7 +64,22 @@ public class TreeSet<T extends Comparable<T>> implements Set<T> {
 
     @Override
     public boolean remove(T element) {
-        //TODO: implement remove
+        if (root==null) return false;
+        if (root.value.equals(element)) {
+            root = null;
+            return true;
+        }
+        TreeNode<T> parent = root;
+        while (parent!=null) {
+            if (element.compareTo(parent.value)<0) {
+                parent = parent.left;
+            } else if (element.compareTo(parent.value)>0) {
+                parent = parent.right;
+            } else {
+                parent.value = parent.right.value;
+                parent.right = parent.right.right;
+            }
+        }
 
         return false;
     }
