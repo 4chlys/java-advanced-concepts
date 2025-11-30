@@ -4,6 +4,7 @@ import be.kdg.kollections.lists.ArrayList;
 import be.kdg.kollections.Kollections;
 import be.kdg.kollections.lists.LinkedList;
 import be.kdg.kollections.lists.List;
+import be.kdg.kollections.maps.Map;
 import be.kdg.model.RaceBike;
 import be.kdg.model.RaceBikeFactory;
 
@@ -78,5 +79,13 @@ public class PerformanceTester {
 
             System.out.println(n + ";" + RaceBike.compareCounter);
         }
+    }
+
+    public static void compareListMapToHashMap(int size) {
+
+    }
+
+    private static Map fillMap(int size) {
+
     }
 }

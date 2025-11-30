@@ -23,22 +23,18 @@ public class Kollections {
     }
 
     public static <T extends Comparable<T>> void mergeSort(List<T> list) {
-        //splits in 2 delen, sorteer elk deel en merge dan
         mergeSort(list, 0, list.size() - 1);
     }
 
-    //from inclusive, to inclusive
     private static <T extends Comparable<T>> void mergeSort(List<T> list, int from, int to) {
-        //splits in 2 delen, sorteer elk deel en merge dan
         if (from > to) throw new IllegalArgumentException("from should be before to");
-        if (to - from == 0) return;//trivial case
+        if (to - from == 0) return;
         int mid = from + (to - from) / 2;
         mergeSort(list, from, mid);
         mergeSort(list, mid + 1, to);
         merge(list, from, to);
     }
 
-    //from and to inclusive
     private static <T extends Comparable<T>> void merge(List<T> list, int from, int to) {
         List<T> mergedList = new ArrayList<>();
         int startSecondList = from + (to - from) / 2 + 1;
@@ -51,11 +47,11 @@ public class Kollections {
                 mergedList.add(list.get(index2++));
             }
         }
-        if (index1 == startSecondList) {//copy rest of second list
+        if (index1 == startSecondList) {
             while (index2 <= to) {
                 mergedList.add(list.get(index2++));
             }
-        } else {//copy rest of first list
+        } else {
             while (index1 < startSecondList) {
                 mergedList.add(list.get(index1++));
             }
@@ -76,7 +72,6 @@ public class Kollections {
         boolean movingI = true;
         while (i < j) {
             if (list.get(i).compareTo(list.get(j)) > 0) {
-                //swap(list, i, j);
                 T tmp = list.get(i);
                 list.set(i, list.get(j));
                 list.set(j, tmp);

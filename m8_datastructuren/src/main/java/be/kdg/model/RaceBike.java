@@ -191,8 +191,7 @@ public class RaceBike implements Comparable<RaceBike> {
         if (obj == null || getClass() != obj.getClass()) return false;
 
         RaceBike raceBike = (RaceBike) obj;
-        return brand == raceBike.brand &&
-                Objects.equals(model, raceBike.model);
+        return model.equalsIgnoreCase(raceBike.model);
     }
 
     /**
@@ -200,7 +199,7 @@ public class RaceBike implements Comparable<RaceBike> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(brand, model);
+        return Objects.hash(model);
     }
 
     /**
@@ -212,11 +211,6 @@ public class RaceBike implements Comparable<RaceBike> {
         compareCounter++;
         if (other == null) {
             throw new NullPointerException("Cannot compare to null RaceBike");
-        }
-
-        int brandComparison = this.brand.compareTo(other.brand);
-        if (brandComparison != 0) {
-            return brandComparison;
         }
 
         return this.model.compareToIgnoreCase(other.model);

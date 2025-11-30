@@ -38,6 +38,9 @@ public class Demo_8 {
                 .sorted()
                 .forEach(System.out::println);
 
+//        System.out.println("\n=== ARRAYLIST VS LINKEDLIST PERFORMANCE ===");
+//        PerformanceTester.compareArrayListAndLinkedList(20000);
+
         System.out.println("\n=== KOLLECTIONS DEMO ===\n");
         List<RaceBike> test = PerformanceTester.randomList(30);
 
