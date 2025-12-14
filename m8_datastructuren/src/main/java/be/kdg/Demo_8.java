@@ -69,8 +69,8 @@ public class Demo_8 {
         }
 
         // 4.8 Run Performance Tests (Copy output to Excel)
-        PerformanceTester.testSelectionSort();
-        PerformanceTester.testMergeSort();
+        //PerformanceTester.testSelectionSort();
+        //PerformanceTester.testMergeSort();
 
         // 4.11 Test Linear vs Binary Search
         System.out.println("\n--- Testing Search ---");
@@ -91,5 +91,9 @@ public class Demo_8 {
         // 5.8 Test Performance of HashMap and ListMap implementation
         System.out.println("\n--- HashMap vs ListMap Performance ---");
         PerformanceTester.compareListMapToHashMap(1000);
+
+        // 6.3 Test Performance of ArraySet and TreeSet implementation
+        System.out.println("\n--- ArraySet vs TreeSet Performance ---");
+        PerformanceTester.compareArraySetToTreeSet(1000);
     }
 }

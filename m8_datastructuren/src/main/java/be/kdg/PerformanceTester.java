@@ -7,6 +7,9 @@ import be.kdg.kollections.lists.List;
 import be.kdg.kollections.maps.HashMap;
 import be.kdg.kollections.maps.ListMap;
 import be.kdg.kollections.maps.Map;
+import be.kdg.kollections.sets.ArraySet;
+import be.kdg.kollections.sets.Set;
+import be.kdg.kollections.sets.TreeSet;
 import be.kdg.model.RaceBike;
 import be.kdg.model.RaceBikeFactory;
 
@@ -60,7 +63,7 @@ public class PerformanceTester {
     public static void testSelectionSort() {
         System.out.println("\n=== SELECTION SORT COMPARISONS ===");
         System.out.println("n;compares");
-        for (int n = 1000; n <= 20000; n += 1000) {
+        for (int n = 1000; n <= 2000; n += 1000) {
             List<RaceBike> myList = randomList(n);
 
             RaceBike.compareCounter = 0;
@@ -73,7 +76,7 @@ public class PerformanceTester {
     public static void testMergeSort() {
         System.out.println("\n=== MERGE SORT COMPARISONS ===");
         System.out.println("n;compares");
-        for (int n = 1000; n <= 20000; n += 1000) {
+        for (int n = 1000; n <= 2000; n += 1000) {
             List<RaceBike> myList = randomList(n);
 
             RaceBike.compareCounter = 0;
@@ -84,44 +87,84 @@ public class PerformanceTester {
     }
 
     public static void compareListMapToHashMap(int size) {
-        Map<Object, Object> hashMap = fillMap(true, size);
-        Map<Object, Object> listMap = fillMap(false, size);
+        System.out.println("\n=== HASHMAP VS LISTMAP PERFORMANCE ===");
 
-        long startHash = System.nanoTime();
+        List<RaceBike> bikeKeys = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            RaceBike.equalsCounter = 0;
-            hashMap.get("bike" + i);
+            bikeKeys.add(RaceBikeFactory.newRandomRaceBike());
         }
+
+        Map<RaceBike, String> hashMap = fillMap(true, bikeKeys);
+
+        RaceBike.equalsCounter = 0;
+        RaceBike.compareCounter = 0;
+        long startHash = System.nanoTime();
+
+        for (int i = 0; i < size; i++) {
+            hashMap.get(bikeKeys.get(i));
+        }
+
         long endHash = System.nanoTime();
 
-        System.out.println("HashMap: n = " + size + ", equalscount = " + RaceBike.equalsCounter + ", nanosec = " + (endHash - startHash));
+        System.out.println("HashMap: n = " + size + ", equalscount = " + RaceBike.equalsCounter + ", comparecount = " + RaceBike.compareCounter + ", nanosec = " + (endHash - startHash));
 
+        Map<RaceBike, String> listMap = fillMap(false, bikeKeys);
+
+        RaceBike.equalsCounter = 0;
+        RaceBike.compareCounter = 0;
         long startList = System.nanoTime();
+
         for (int i = 0; i < size; i++) {
-            RaceBike.equalsCounter = 0;
-            listMap.get("bike" + i);
+            listMap.get(bikeKeys.get(i));
         }
+
         long endList = System.nanoTime();
 
-        System.out.println("ListMap: n = " + size + ", equalscount = " + RaceBike.equalsCounter + ", nanosec = " + (endList - startList));
+        System.out.println("ListMap: n = " + size + ", equalscount = " + RaceBike.equalsCounter + ", comparecount = " + RaceBike.compareCounter + ", nanosec = " + (endList - startList));
     }
 
-    private static Map<Object, Object> fillMap(boolean useHashMap, int size) {
-        if (useHashMap) {
-            Map<Object, Object> map = new HashMap<>();
-            for (int i = 0; i < size; i++) {
-                RaceBike bike = RaceBikeFactory.newEmptyRaceBike();
-                bike.setModel("bike" + i);
-                map.put(bike.getModel(), "This is bike " + bike.getModel());
-            }
-            return map;
-        };
-        Map<Object, Object> map = new ListMap<>();
-        for (int i = 0; i < size; i++) {
-            RaceBike bike = RaceBikeFactory.newEmptyRaceBike();
-            bike.setModel("bike" + i);
-            map.put(bike.getModel(), "This is bike " + bike.getModel());
+    private static Map<RaceBike, String> fillMap(boolean useHashMap, List<RaceBike> bikeKeys) {
+        Map<RaceBike, String> map = useHashMap ? new HashMap<>() : new ListMap<>();
+
+        for (int i = 0; i < bikeKeys.size(); i++) {
+            RaceBike bike = bikeKeys.get(i);
+            map.put(bike, "Bike model: " + bike.getModel());
         }
+
         return map;
+    }
+
+    public static void compareArraySetToTreeSet(int size) {
+        System.out.println("\n=== ARRAYSET VS TREESET PERFORMANCE ===");
+
+        Set<RaceBike> arraySet = new ArraySet<>();
+
+        RaceBike.equalsCounter = 0;
+        RaceBike.compareCounter = 0;
+
+        long startArraySet = System.nanoTime();
+        for (int i = 0; i < size; i++) {
+            arraySet.add(RaceBikeFactory.newRandomRaceBike());
+        }
+        long endArraySet = System.nanoTime();
+
+        System.out.println("ArraySet, n = " + size + ": equalscount: " + RaceBike.equalsCounter);
+        System.out.println("ArraySet, n = " + size + ": comparecount: " + RaceBike.compareCounter);
+        System.out.println("ArraySet, n = " + size + ": nanosec: " + (endArraySet - startArraySet));
+
+        Set<RaceBike> treeSet = new TreeSet<>();
+
+        RaceBike.equalsCounter = 0;
+        RaceBike.compareCounter = 0;
+
+        long startTreeSet = System.nanoTime();
+        for (int i = 0; i < size; i++) {
+            treeSet.add(RaceBikeFactory.newRandomRaceBike());
+        }
+        long endTreeSet = System.nanoTime();
+
+        System.out.println("TreeSet, n = " + size + ": equalscount: " + RaceBike.equalsCounter);
+        System.out.println("TreeSet, n = " + size + ": comparecount: " + RaceBike.compareCounter);
+        System.out.println("TreeSet, n = " + size + ": nanosec: " + (endTreeSet - startTreeSet));
     }
 }

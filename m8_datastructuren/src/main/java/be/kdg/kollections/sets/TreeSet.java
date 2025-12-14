@@ -28,20 +28,27 @@ public class TreeSet<T extends Comparable<T>> implements Set<T> {
     }
 
     private void add(TreeNode<T> parent, T value) {
-        if (value.compareTo(parent.value) < 0) {
+        int comparison = value.compareTo(parent.value);
+
+        if (comparison == 0) {
+            return;
+        }
+
+        if (comparison < 0) {
             if (parent.left == null) {
                 parent.left = new TreeNode<>(value);
+                size++;
             } else {
                 add(parent.left, value);
             }
         } else {
             if (parent.right == null) {
                 parent.right = new TreeNode<>(value);
+                size++;
             } else {
                 add(parent.right, value);
             }
         }
-
     }
 
     @Override
@@ -64,24 +71,86 @@ public class TreeSet<T extends Comparable<T>> implements Set<T> {
 
     @Override
     public boolean remove(T element) {
-        if (root==null) return false;
+        if (root == null) return false;
+
         if (root.value.equals(element)) {
-            root = null;
+            root = removeNode(root);
+            if (root != null || size > 0) {
+                size--;
+            }
             return true;
         }
+
         TreeNode<T> parent = root;
-        while (parent!=null) {
-            if (element.compareTo(parent.value)<0) {
+        TreeNode<T> current = null;
+        boolean isLeftChild = false;
+
+        while (parent != null) {
+            int comparison = element.compareTo(parent.value);
+
+            if (comparison < 0) {
+                if (parent.left != null && parent.left.value.equals(element)) {
+                    current = parent.left;
+                    isLeftChild = true;
+                    break;
+                }
                 parent = parent.left;
-            } else if (element.compareTo(parent.value)>0) {
+            } else if (comparison > 0) {
+                if (parent.right != null && parent.right.value.equals(element)) {
+                    current = parent.right;
+                    isLeftChild = false;
+                    break;
+                }
                 parent = parent.right;
             } else {
-                parent.value = parent.right.value;
-                parent.right = parent.right.right;
+                return false;
             }
         }
 
-        return false;
+        if (current == null) return false;
+
+        TreeNode<T> replacement = removeNode(current);
+
+        if (isLeftChild) {
+            parent.left = replacement;
+        } else {
+            parent.right = replacement;
+        }
+
+        size--;
+        return true;
+    }
+
+    private TreeNode<T> removeNode(TreeNode<T> node) {
+        if (node.left == null && node.right == null) {
+            return null;
+        }
+
+        if (node.left == null) {
+            return node.right;
+        }
+
+        if (node.right == null) {
+            return node.left;
+        }
+
+        TreeNode<T> successorParent = node;
+        TreeNode<T> successor = node.right;
+
+        while (successor.left != null) {
+            successorParent = successor;
+            successor = successor.left;
+        }
+
+        node.value = successor.value;
+
+        if (successorParent == node) {
+            successorParent.right = successor.right;
+        } else {
+            successorParent.left = successor.right;
+        }
+
+        return node;
     }
 
     @Override
@@ -90,9 +159,17 @@ public class TreeSet<T extends Comparable<T>> implements Set<T> {
     }
 
     private boolean contains(TreeNode<T> node, T element) {
-        if (node==null) return false;
-        if (node.value.equals(element)) return true;
-        return contains(node.left, element)||contains(node.right, element);
+        if (node == null) return false;
+
+        int comparison = element.compareTo(node.value);
+
+        if (comparison == 0) {
+            return true;
+        } else if (comparison < 0) {
+            return contains(node.left, element);
+        } else {
+            return contains(node.right, element);
+        }
     }
 
     @Override

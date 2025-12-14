@@ -201,7 +201,7 @@ public class RaceBike implements Comparable<RaceBike> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(model);
+        return Objects.hash(model.toLowerCase());
     }
 
     /**

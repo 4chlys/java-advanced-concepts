@@ -36,17 +36,21 @@ public class HashMap<K, V> implements Map<K, V> {
 
     @Override
     public void put(K key, V value) {
-        for (int i = 0; i < buckets.length; i++) {
-            Node<K, V> bucket = buckets[i];
-            if (bucket == null) {
-                buckets[i] = new Node<>(key, value);
-                size++;
-                return;
-            } else if (bucket.key.equals(key)) {
-                bucket.value = value;
+        int index = hash(key);
+        Node<K, V> current = buckets[index];
+
+        while (current != null) {
+            if (current.key.equals(key)) {
+                current.value = value;
                 return;
             }
+            current = current.next;
         }
+
+        Node<K, V> newNode = new Node<>(key, value);
+        newNode.next = buckets[index];
+        buckets[index] = newNode;
+        size++;
     }
 
     @Override
@@ -56,10 +60,14 @@ public class HashMap<K, V> implements Map<K, V> {
 
     @Override
     public V get(K key) {
-        for (Node<K, V> bucket : buckets) {
-            if (bucket != null && bucket.key.equals(key)) {
-                return bucket.value;
+        int index = hash(key);
+        Node<K, V> current = buckets[index];
+
+        while (current != null) {
+            if (current.key.equals(key)) {
+                return current.value;
             }
+            current = current.next;
         }
 
         return null;
