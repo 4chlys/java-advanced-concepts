@@ -1,47 +1,55 @@
 package be.kdg.model;
 
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.stream.Collectors;
 
+/**
+ * 4.4 - Thread-safe version using ArrayBlockingQueue
+ */
 public class RaceBikes {
-    private Set<RaceBike> raceBikes;
+    private BlockingQueue<RaceBike> raceBikes;
 
+    /**
+     * Default constructor with capacity of 10000
+     */
     public RaceBikes() {
-        this.raceBikes = new TreeSet<>();
+        this(10000);
+    }
+
+    /**
+     * 4.4.b - Constructor with capacity parameter
+     * @param capacity The maximum capacity of the queue
+     */
+    public RaceBikes(int capacity) {
+        this.raceBikes = new ArrayBlockingQueue<>(capacity);
     }
 
     /**
      * Adds a RaceBike to the collection.
-     * Returns true if the bike was added, false if it already exists.
+     * Returns true if the bike was added, false if queue is full or bike is null.
      */
     public boolean add(RaceBike raceBike) {
         if (raceBike == null) {
             throw new IllegalArgumentException("RaceBike cannot be null");
         }
-        return raceBikes.add(raceBike);
+        return raceBikes.offer(raceBike);
     }
 
     /**
-     * Removes a RaceBike from the collection using an Iterator (safe removal).
+     * Removes a RaceBike from the collection.
      * Returns true if the bike was removed, false if it wasn't found.
      */
     public boolean remove(RaceBike raceBike) {
         if (raceBike == null) {
             return false;
         }
-
-        Iterator<RaceBike> iterator = raceBikes.iterator();
-        while (iterator.hasNext()) {
-            RaceBike bike = iterator.next();
-            if (bike.equals(raceBike)) {
-                iterator.remove();
-                return true;
-            }
-        }
-        return false;
+        return raceBikes.remove(raceBike);
     }
 
     /**
-     * Removes a RaceBike by brand and model using an Iterator.
+     * Removes a RaceBike by brand and model.
      * Returns true if the bike was removed, false if it wasn't found.
      */
     public boolean remove(Brand brand, String model) {
@@ -49,33 +57,35 @@ public class RaceBikes {
             return false;
         }
 
-        Iterator<RaceBike> iterator = raceBikes.iterator();
-        while (iterator.hasNext()) {
-            RaceBike bike = iterator.next();
-            if (bike.getBrand() == brand && bike.getModel().equalsIgnoreCase(model.trim())) {
-                iterator.remove();
-                return true;
-            }
-        }
-        return false;
+        RaceBike toRemove = raceBikes.stream()
+                .filter(bike -> bike.getBrand() == brand &&
+                        bike.getModel().equalsIgnoreCase(model.trim()))
+                .findFirst()
+                .orElse(null);
+
+        return toRemove != null && raceBikes.remove(toRemove);
     }
 
     /**
      * Removes all RaceBikes that match a given predicate.
      * Returns the number of bikes removed.
-     *
-     * Example usage:
-     * - collection.removeIf(bike -> bike.getBrand() == Brand.TREK)
-     * - collection.removeIf(bike -> bike.getPrice().compareTo(new BigDecimal("5000")) > 0)
      */
     public int removeIf(java.util.function.Predicate<RaceBike> predicate) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate cannot be null");
         }
 
-        int initialSize = raceBikes.size();
-        raceBikes.removeIf(predicate);
-        return initialSize - raceBikes.size();
+        List<RaceBike> toRemove = raceBikes.stream()
+                .filter(predicate)
+                .toList();
+
+        int count = 0;
+        for (RaceBike bike : toRemove) {
+            if (raceBikes.remove(bike)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     /**
@@ -91,65 +101,63 @@ public class RaceBikes {
      * Returns the RaceBike if found, null otherwise.
      */
     public RaceBike search(Brand brand, String model) {
-        RaceBike searchBike = new RaceBike(brand, model);
-        for (RaceBike bike : raceBikes) {
-            if (bike.equals(searchBike)) {
-                return bike;
-            }
-        }
-        return null;
+        return raceBikes.stream()
+                .filter(bike -> bike.getBrand() == brand &&
+                        bike.getModel().equalsIgnoreCase(model))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
-     * Returns all RaceBikes as a sorted list (by natural ordering).
+     * Returns all RaceBikes as a list.
      */
     public List<RaceBike> getAllRaceBikes() {
         return new ArrayList<>(raceBikes);
     }
 
     /**
-     * Returns all RaceBikes as a sorted list (by Brands).
+     * Returns all RaceBikes sorted by Brand.
      */
     public List<RaceBike> sortedOnBrand() {
-        List<RaceBike> brandList = new ArrayList<>(raceBikes);
-        brandList.sort(Comparator.comparing(RaceBike::getBrand));
-        return brandList;
+        return raceBikes.stream()
+                .sorted(Comparator.comparing(RaceBike::getBrand))
+                .collect(Collectors.toList());
     }
 
     /**
-     * Returns all RaceBikes as a sorted list (by Models).
+     * Returns all RaceBikes sorted by Model.
      */
     public List<RaceBike> sortedOnModel() {
-        List<RaceBike> modelList = new ArrayList<>(raceBikes);
-        modelList.sort(Comparator.comparing(RaceBike::getModel));
-        return modelList;
+        return raceBikes.stream()
+                .sorted(Comparator.comparing(RaceBike::getModel))
+                .collect(Collectors.toList());
     }
 
     /**
-     * Returns all RaceBikes as a sorted list (by Colors).
+     * Returns all RaceBikes sorted by Color.
      */
     public List<RaceBike> sortedOnColor() {
-        List<RaceBike> colorList = new ArrayList<>(raceBikes);
-        colorList.sort(Comparator.comparing(RaceBike::getColor));
-        return colorList;
+        return raceBikes.stream()
+                .sorted(Comparator.comparing(RaceBike::getColor))
+                .collect(Collectors.toList());
     }
 
     /**
-     * Returns all RaceBikes as a sorted list (by Price).
+     * Returns all RaceBikes sorted by Price.
      */
     public List<RaceBike> sortedOnPrice() {
-        List<RaceBike> priceList = new ArrayList<>(raceBikes);
-        priceList.sort(Comparator.comparing(RaceBike::getPrice));
-        return priceList;
+        return raceBikes.stream()
+                .sorted(Comparator.comparing(RaceBike::getPrice))
+                .collect(Collectors.toList());
     }
 
     /**
-     * Returns all RaceBikes as a sorted list (by Frame Material).
+     * Returns all RaceBikes sorted by Frame Material.
      */
     public List<RaceBike> sortedOnFrameMaterial() {
-        List<RaceBike> frameMaterialList = new ArrayList<>(raceBikes);
-        frameMaterialList.sort(Comparator.comparing(RaceBike::getFrameMaterial));
-        return frameMaterialList;
+        return raceBikes.stream()
+                .sorted(Comparator.comparing(RaceBike::getFrameMaterial))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -158,7 +166,7 @@ public class RaceBikes {
     public List<RaceBike> getRaceBikesByBrand(Brand brand) {
         return raceBikes.stream()
                 .filter(bike -> bike.getBrand() == brand)
-                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+                .collect(Collectors.toList());
     }
 
     /**
