@@ -75,44 +75,31 @@ public class RaceBikesPresenter {
      */
     private void handleAdd() {
         try {
-            if (!validateInput()) {
-                return;
-            }
-
-            String model = view.getModelTextField().getText().trim();
-            LocalDate releaseDate = view.getReleaseDatePicker().getValue();
-            BigDecimal price = new BigDecimal(view.getPriceTextField().getText().trim());
+            if (!validateInput()) return;
 
             RaceBike newBike = new RaceBike(
-                    Brand.UNKNOWN,  // You can add a ComboBox for this
-                    model,
-                    Color.WHITE,    // You can add a ComboBox for this
-                    0.0,            // Default weight
-                    0,              // Default frame size
-                    releaseDate,
-                    price,
+                    view.getBrandComboBox().getValue(),
+                    view.getModelTextField().getText().trim(),
+                    view.getColorComboBox().getValue(),
+                    0.0,
+                    0,
+                    view.getReleaseDatePicker().getValue(),
+                    new BigDecimal(view.getPriceTextField().getText().trim()),
                     Currency.EUR,
-                    null,           // Default groupset
-                    null,           // Default frame material
-                    null,           // Default fork material
-                    null,           // Default brake type
-                    null            // Default wheel size
+                    null, null, null, null, null
             );
 
             service.addRaceBike(newBike);
-
             raceBikesList.add(newBike);
 
             view.clearInputFields();
+            view.setStatusMessage("Successfully added: " + newBike.getModel(), false);
 
-            view.setStatusMessage("Successfully added: " + model, false);
-
-        } catch (NumberFormatException e) {
-            showError("Invalid Input", "Price must be a valid number");
         } catch (RaceBikeException e) {
             showError("Error adding race bike", e.getMessage());
         }
     }
+
 
     /**
      * Handle updating an existing race bike
@@ -126,41 +113,24 @@ public class RaceBikesPresenter {
         }
 
         try {
-            if (!validateInput()) {
-                return;
-            }
+            if (!validateInput()) return;
 
-            String model = view.getModelTextField().getText().trim();
-            LocalDate releaseDate = view.getReleaseDatePicker().getValue();
-            BigDecimal price = new BigDecimal(view.getPriceTextField().getText().trim());
+            selectedBike.setBrand(view.getBrandComboBox().getValue());
+            selectedBike.setModel(view.getModelTextField().getText().trim());
+            selectedBike.setColor(view.getColorComboBox().getValue());
+            selectedBike.setReleaseDate(view.getReleaseDatePicker().getValue());
+            selectedBike.setPrice(new BigDecimal(view.getPriceTextField().getText().trim()));
 
-            RaceBike updatedBike = new RaceBike(
-                    selectedBike.getBrand(),
-                    model,
-                    selectedBike.getColor(),
-                    selectedBike.getWeight(),
-                    selectedBike.getFrameSize(),
-                    releaseDate,
-                    price,
-                    Currency.EUR,
-                    selectedBike.getGroupset(),
-                    selectedBike.getFrameMaterial(),
-                    selectedBike.getForkMaterial(),
-                    selectedBike.getBrakeType(),
-                    selectedBike.getWheelSize()
-            );
+            service.updateRaceBike(selectedBike);
 
-            service.updateRaceBike(updatedBike);
+            view.getTableView().refresh();
+            view.setStatusMessage("Successfully updated: " + selectedBike.getModel(), false);
 
-            view.clearInputFields();
-            view.setStatusMessage("Successfully updated: " + model, false);
-
-        } catch (NumberFormatException e) {
-            showError("Invalid Input", "Price must be a valid number");
         } catch (RaceBikeException e) {
             showError("Error updating race bike", e.getMessage());
         }
     }
+
 
     /**
      * Handle deleting a race bike
@@ -197,19 +167,19 @@ public class RaceBikesPresenter {
      * Handle table selection changes
      */
     private void handleSelection(RaceBike selectedBike) {
-        if (selectedBike != null) {
-            view.getUpdateButton().setDisable(false);
-            view.getDeleteButton().setDisable(false);
+        boolean hasSelection = selectedBike != null;
 
+        view.getUpdateButton().setDisable(!hasSelection);
+        view.getDeleteButton().setDisable(!hasSelection);
+
+        if (hasSelection) {
+            view.getBrandComboBox().setValue(selectedBike.getBrand());
             view.getModelTextField().setText(selectedBike.getModel());
+            view.getColorComboBox().setValue(selectedBike.getColor());
             view.getReleaseDatePicker().setValue(selectedBike.getReleaseDate());
-
-            if (selectedBike.getPrice() != null) {
-                view.getPriceTextField().setText(selectedBike.getPrice().toString());
-            }
-        } else {
-            view.getUpdateButton().setDisable(true);
-            view.getDeleteButton().setDisable(true);
+            view.getPriceTextField().setText(
+                    selectedBike.getPrice() != null ? selectedBike.getPrice().toString() : ""
+            );
         }
     }
 
@@ -223,8 +193,18 @@ public class RaceBikesPresenter {
         LocalDate releaseDate = view.getReleaseDatePicker().getValue();
         String priceText = view.getPriceTextField().getText();
 
+        if (view.getBrandComboBox().getValue() == null) {
+            showWarning("Invalid Input", "Please select a brand");
+            return false;
+        }
+
         if (model == null || model.trim().isEmpty()) {
             showWarning("Invalid Input", "Model cannot be empty");
+            return false;
+        }
+
+        if (view.getColorComboBox().getValue() == null) {
+            showWarning("Invalid Input", "Please select a color");
             return false;
         }
 

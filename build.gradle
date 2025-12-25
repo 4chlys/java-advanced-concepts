@@ -1,2 +1,15 @@
-group = 'be.kdg.java2'
+group = 'be.kdg'
 version = '1.0-SNAPSHOT'
+
+subprojects {
+    apply plugin: 'java'
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    repositories {
+        mavenCentral()
+    }
+}

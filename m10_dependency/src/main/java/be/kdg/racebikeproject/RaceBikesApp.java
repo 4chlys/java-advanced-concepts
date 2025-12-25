@@ -1,5 +1,6 @@
 package be.kdg.racebikeproject;
 
+import be.kdg.racebikeproject.database.RaceBikeDao;
 import be.kdg.racebikeproject.database.RaceBikeDbDao;
 import be.kdg.racebikeproject.service.RaceBikesService;
 import be.kdg.racebikeproject.service.RaceBikesServiceImpl;
@@ -17,10 +18,9 @@ public class RaceBikesApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        RaceBikesService service = new RaceBikesServiceImpl(RaceBikeDbDao.getInstance("racebikes.db"));
-
+        RaceBikeDao dao = RaceBikeDbDao.getInstance("racebikes.db");
+        RaceBikesService service = new RaceBikesServiceImpl(dao); 
         RaceBikesView view = new RaceBikesView();
-
         RaceBikesPresenter presenter = new RaceBikesPresenter(view, service);
 
         Scene scene = new Scene(view, 800, 600);

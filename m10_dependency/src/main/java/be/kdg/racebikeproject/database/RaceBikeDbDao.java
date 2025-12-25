@@ -42,27 +42,34 @@ public class RaceBikeDbDao implements RaceBikeDao {
     private void createTable() {
         try {
             Statement statement = connection.createStatement();
-            statement.execute("DROP TABLE IF EXISTS racebikesdb");
-            String createQuery = "CREATE TABLE racebikesdb " +
-                    "(id INTEGER IDENTITY PRIMARY KEY," +
-                    "brand VARCHAR(20) NOT NULL, " +
-                    "model VARCHAR(50) NOT NULL," +
-                    "color VARCHAR(15)," +
-                    "weight DOUBLE," +
-                    "frameSize INTEGER," +
-                    "releaseDate DATE," +
-                    "price DECIMAL(10,2)," +
-                    "currency VARCHAR(5)," +
-                    "groupset VARCHAR(50)," +
-                    "frameMaterial VARCHAR(20)," +
-                    "forkMaterial VARCHAR(20)," +
-                    "brakeType VARCHAR(30)," +
-                    "wheelSize VARCHAR(30)," +
-                    "UNIQUE(brand, model))";
-            statement.execute(createQuery);
-            Data.getData().forEach(this::insert);
-            statement.close();
-            logger.log(Level.INFO, "Database created");
+
+            ResultSet rs = connection.getMetaData().getTables(null, null, "RACEBIKESDB", null);
+            boolean tableExists = rs.next();
+            rs.close();
+
+            if (!tableExists) {
+                String createQuery = "CREATE TABLE racebikesdb " +
+                        "(id INTEGER IDENTITY PRIMARY KEY," +
+                        "brand VARCHAR(20) NOT NULL, " +
+                        "model VARCHAR(50) NOT NULL," +
+                        "color VARCHAR(15)," +
+                        "weight DOUBLE," +
+                        "frameSize INTEGER," +
+                        "releaseDate DATE," +
+                        "price DECIMAL(10,2)," +
+                        "currency VARCHAR(5)," +
+                        "groupset VARCHAR(50)," +
+                        "frameMaterial VARCHAR(20)," +
+                        "forkMaterial VARCHAR(20)," +
+                        "brakeType VARCHAR(30)," +
+                        "wheelSize VARCHAR(30)," +
+                        "UNIQUE(brand, model))";
+                statement.execute(createQuery);
+                Data.getData().forEach(this::insert);
+                logger.log(Level.INFO, "Database created and populated with data");
+            } else {
+                logger.log(Level.INFO, "Table already exists, skipping creation");
+            }
         } catch (SQLException e) {
             String message = e.getMessage();
             if (message.contains("object name already exists")) {
@@ -125,7 +132,7 @@ public class RaceBikeDbDao implements RaceBikeDao {
             logger.log(Level.WARNING, String.format("Error inserting RaceBike: %s %s",
                     raceBike.getBrand(), raceBike.getModel()), e);
             throw new RaceBikeException(String.format("Error inserting RaceBike: %s %s",
-            raceBike.getBrand(), raceBike.getModel()) + e.getMessage());
+                    raceBike.getBrand(), raceBike.getModel()) + e.getMessage());
         }
     }
 
@@ -239,7 +246,7 @@ public class RaceBikeDbDao implements RaceBikeDao {
             ResultSet resultSet = prepStatement.executeQuery();
             List<RaceBike> raceBikes = new ArrayList<>();
 
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 raceBikes.add(createRaceBikeFromResultSet(resultSet));
             }
 
