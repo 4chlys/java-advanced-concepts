@@ -1,0 +1,5 @@
+package be.kdg.racebikeproject.model;
+
+public enum Brand {
+    CERVELO, COLNAGO, BIANCHI, CANYON, PINARELLO, ORBEA, SPECIALIZED, GIANT, TREK, BMC, SCOTT, WILIER, RIDLEY, CUBE, MERIDA, UNKNOWN
+}
