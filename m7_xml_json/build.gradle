@@ -3,7 +3,7 @@ plugins {
     id 'application'
 }
 
-group = 'be.kdg.java'
+group = 'be.kdg'
 version = '1.0'
 
 java {
@@ -18,10 +18,8 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-
     implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.6'
     implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.4'
-
     implementation 'com.google.code.gson:gson:2.13.2'
 }
 

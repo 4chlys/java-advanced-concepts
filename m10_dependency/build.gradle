@@ -1,20 +1,27 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
-
-group = 'be.kdg.java2'
-version = '1.0-SNAPSHOT'
-
 repositories {
     mavenCentral()
 }
-
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    implementation 'org.hsqldb:hsqldb:2.7.4'
+    implementation 'org.springframework:spring-context:6.0.2'
+    implementation 'org.springframework:spring-core:6.0.2'
 }
 
+application {
+    mainClass = 'be.kdg.racebikeproject.RaceBikesApp'
+}
+
+javafx {
+    modules = ['javafx.controls']
+    version = '21'
+}
 test {
     useJUnitPlatform()
 }
+sourceCompatibility = 21

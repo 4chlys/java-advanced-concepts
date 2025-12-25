@@ -8,24 +8,34 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import be.kdg.racebikeproject.data.Data;
+import be.kdg.racebikeproject.exceptions.RaceBikeException;
 import be.kdg.racebikeproject.model.*;
 
 public class RaceBikeDbDao implements RaceBikeDao {
     private Connection connection;
     private static final Logger logger = Logger.getLogger(RaceBikeDbDao.class.getName());
 
-    public RaceBikeDbDao(String databasePath) {
+    private static RaceBikeDbDao instance;
+
+    private RaceBikeDbDao(String databasePath) {
         connect(databasePath);
         createTable();
+    }
+
+    public static synchronized RaceBikeDbDao getInstance(String databasePath) {
+        if (instance == null) {
+            instance = new RaceBikeDbDao(databasePath);
+        }
+        return instance;
     }
 
     private void connect(String databasePath) {
         try {
             connection = DriverManager.getConnection("jdbc:hsqldb:file:" + databasePath, "rb", "");
-            System.out.println("Connection made");
+            logger.log(Level.INFO, "Connection made");
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Cannot connect to database: " + databasePath, e);
-            System.err.println("Cannot connect to database: " + databasePath);
+            logger.log(Level.WARNING, "Cannot connect to database: " + databasePath, e);
+            throw new RaceBikeException("Cannot connect to database: " + databasePath);
         }
     }
 
@@ -52,16 +62,15 @@ public class RaceBikeDbDao implements RaceBikeDao {
             statement.execute(createQuery);
             Data.getData().forEach(this::insert);
             statement.close();
-            System.out.println("Database created");
+            logger.log(Level.INFO, "Database created");
         } catch (SQLException e) {
             String message = e.getMessage();
             if (message.contains("object name already exists")) {
                 logger.log(Level.INFO, "Table already exists, skipping creation");
                 return;
             }
-            logger.log(Level.SEVERE, "Unexpected error creating table", e);
-            System.err.println("Unexpected error creating table: " + e.getMessage());
-            System.exit(1);
+            logger.log(Level.WARNING, "Unexpected error creating table", e);
+            throw new RaceBikeException("Unexpected error creating table: " + e.getMessage());
         }
     }
 
@@ -113,10 +122,10 @@ public class RaceBikeDbDao implements RaceBikeDao {
             return result;
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, String.format("Error inserting RaceBike: %s %s",
+            logger.log(Level.WARNING, String.format("Error inserting RaceBike: %s %s",
                     raceBike.getBrand(), raceBike.getModel()), e);
-            System.err.println("Fout bij insert: " + e.getMessage());
-            return false;
+            throw new RaceBikeException(String.format("Error inserting RaceBike: %s %s",
+            raceBike.getBrand(), raceBike.getModel()) + e.getMessage());
         }
     }
 
@@ -158,10 +167,10 @@ public class RaceBikeDbDao implements RaceBikeDao {
             return result;
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, String.format("Error updating RaceBike with id %d: %s %s",
+            logger.log(Level.WARNING, String.format("Error updating RaceBike with id %d: %s %s",
                     raceBike.getId(), raceBike.getBrand(), raceBike.getModel()), e);
-            System.err.println("Fout bij update: " + e.getMessage());
-            return false;
+            throw new RaceBikeException(String.format("Error updating RaceBike with id %d: %s %s",
+                    raceBike.getId(), raceBike.getBrand(), raceBike.getModel()) + e.getMessage());
         }
     }
 
@@ -187,9 +196,8 @@ public class RaceBikeDbDao implements RaceBikeDao {
             return result;
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, String.format("Error deleting RaceBike with model: %s", model), e);
-            System.err.println("Fout bij delete: " + e.getMessage());
-            return false;
+            logger.log(Level.WARNING, String.format("Error deleting RaceBike with model: %s", model), e);
+            throw new RaceBikeException(String.format("Error deleting RaceBike with model: %s", model) + e.getMessage());
         }
     }
 
@@ -217,9 +225,8 @@ public class RaceBikeDbDao implements RaceBikeDao {
             return raceBike;
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, String.format("Error retrieving RaceBike with model: %s", model), e);
-            System.err.println("Fout bij retrieve: " + e.getMessage());
-            return null;
+            logger.log(Level.WARNING, String.format("Error retrieving RaceBike with model: %s", model), e);
+            throw new RaceBikeException(String.format("Error retrieving RaceBike with model: %s", model) + e.getMessage());
         }
     }
 
@@ -241,9 +248,8 @@ public class RaceBikeDbDao implements RaceBikeDao {
             return raceBikes;
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, String.format("Error retrieving RaceBike with model: %s", model), e);
-            System.err.println("Fout bij retrieve: " + e.getMessage());
-            return null;
+            logger.log(Level.WARNING, "Error retrieving RaceBikes", e);
+            throw new RaceBikeException("Error retrieving RaceBikes" + e.getMessage());
         }
     }
 
@@ -263,8 +269,8 @@ public class RaceBikeDbDao implements RaceBikeDao {
             statement.close();
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, String.format("Error executing query: %s", query), e);
-            System.err.println("Fout bij sortedOn query: " + e.getMessage());
+            logger.log(Level.WARNING, String.format("Error executing query: %s", query), e);
+            throw new RaceBikeException(String.format("Error executing query: %s", query) + e.getMessage());
         }
 
         return raceBikes;
@@ -341,10 +347,11 @@ public class RaceBikeDbDao implements RaceBikeDao {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
-                System.out.println("Database connection closed");
+                logger.log(Level.INFO, "Database connection closed");
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error closing database connection", e);
+            logger.log(Level.WARNING, "Error closing database connection", e);
+            throw new RaceBikeException("Error closing database connection: " + e.getMessage());
         }
     }
 }
