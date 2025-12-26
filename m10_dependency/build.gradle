@@ -14,7 +14,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'be.kdg.racebikeproject.RaceBikesApp'
+    mainClass = 'be.kdg.racebikeproject.Main'
 }
 
 javafx {

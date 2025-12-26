@@ -14,12 +14,12 @@ import javafx.stage.Stage;
  * Main JavaFX Application for RaceBikes Management
  * Demonstrates MVP (Model-View-Presenter) pattern
  */
-public class RaceBikesApp extends Application {
+public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
         RaceBikeDao dao = RaceBikeDbDao.getInstance("racebikes.db");
-        RaceBikesService service = new RaceBikesServiceImpl(dao); 
+        RaceBikesService service = new RaceBikesServiceImpl(dao);
         RaceBikesView view = new RaceBikesView();
         RaceBikesPresenter presenter = new RaceBikesPresenter(view, service);
 

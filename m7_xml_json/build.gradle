@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'application'
 }
 
 group = 'be.kdg'
@@ -29,8 +28,4 @@ test {
         showStandardStreams = true
     }
     ignoreFailures = true
-}
-
-application {
-    mainClass = 'be.kdg.Demo5'
 }

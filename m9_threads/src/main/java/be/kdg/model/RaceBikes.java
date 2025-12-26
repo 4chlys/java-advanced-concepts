@@ -1,21 +1,21 @@
 package be.kdg.model;
 
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
 /**
- * 4.4 - Thread-safe version using ArrayBlockingQueue
+ * 4.4 - Thread-safe version using BlockingQueue
  */
 public class RaceBikes {
     private BlockingQueue<RaceBike> raceBikes;
 
     /**
-     * Default constructor with capacity of 10000
+     * Default constructor with unlimited capacity
      */
     public RaceBikes() {
-        this(10000);
+        this.raceBikes = new LinkedBlockingQueue<>();
     }
 
     /**
@@ -23,18 +23,24 @@ public class RaceBikes {
      * @param capacity The maximum capacity of the queue
      */
     public RaceBikes(int capacity) {
-        this.raceBikes = new ArrayBlockingQueue<>(capacity);
+        this.raceBikes = new LinkedBlockingQueue<>(capacity);
     }
 
     /**
      * Adds a RaceBike to the collection.
-     * Returns true if the bike was added, false if queue is full or bike is null.
+     * Uses blocking put() to ensure elements are always added.
      */
     public boolean add(RaceBike raceBike) {
         if (raceBike == null) {
             throw new IllegalArgumentException("RaceBike cannot be null");
         }
-        return raceBikes.offer(raceBike);
+        try {
+            raceBikes.put(raceBike);
+            return true;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return false;
+        }
     }
 
     /**

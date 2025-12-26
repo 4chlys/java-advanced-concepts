@@ -122,7 +122,7 @@ public class RaceBikesView extends BorderPane {
 
         currencyComboBox = new ComboBox<>();
         currencyComboBox.setItems(FXCollections.observableArrayList(Currency.values()));
-        currencyComboBox.setPrefWidth(50);
+        currencyComboBox.setPrefWidth(75);
 
         frameMaterialComboBox = new ComboBox<>();
         frameMaterialComboBox.setItems(FXCollections.observableArrayList(FrameMaterial.values()));
@@ -226,6 +226,18 @@ public class RaceBikesView extends BorderPane {
 
     ComboBox<Color> getColorComboBox() {
         return colorComboBox;
+    }
+
+    ComboBox<Currency> getCurrencyComboBox() {
+        return currencyComboBox;
+    }
+
+    ComboBox<FrameMaterial> getFrameMaterialComboBox() {
+        return frameMaterialComboBox;
+    }
+
+    ComboBox<BrakeType> getBrakeTypeComboBox() {
+        return brakeTypeComboBox;
     }
 
     Button getAddButton() {

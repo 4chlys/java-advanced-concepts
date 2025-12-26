@@ -31,6 +31,7 @@ public class RaceBikesPresenter {
     public RaceBikesPresenter(RaceBikesView view, RaceBikesService service) {
         this.view = view;
         this.service = service;
+
         this.raceBikesList = FXCollections.observableArrayList();
 
         view.getTableView().setItems(raceBikesList);
@@ -89,14 +90,18 @@ public class RaceBikesPresenter {
                     null, null, null, null, null
             );
 
-            service.addRaceBike(newBike);
-            raceBikesList.add(newBike);
-
-            view.clearInputFields();
-            view.setStatusMessage("Successfully added: " + newBike.getModel(), false);
+            if (service.addRaceBike(newBike)) {
+                raceBikesList.add(newBike);
+                view.clearInputFields();
+                view.setStatusMessage("Successfully added: " + newBike.getModel(), false);
+            } else {
+                showError("Error adding race bike", "Could not add bike to database");
+            }
 
         } catch (RaceBikeException e) {
             showError("Error adding race bike", e.getMessage());
+        } catch (NumberFormatException e) {
+            showError("Invalid Input", "Price must be a valid number");
         }
     }
 
@@ -121,13 +126,17 @@ public class RaceBikesPresenter {
             selectedBike.setReleaseDate(view.getReleaseDatePicker().getValue());
             selectedBike.setPrice(new BigDecimal(view.getPriceTextField().getText().trim()));
 
-            service.updateRaceBike(selectedBike);
-
-            view.getTableView().refresh();
-            view.setStatusMessage("Successfully updated: " + selectedBike.getModel(), false);
+            if (service.updateRaceBike(selectedBike)) {
+                view.getTableView().refresh();
+                view.setStatusMessage("Successfully updated: " + selectedBike.getModel(), false);
+            } else {
+                showError("Error updating race bike", "Could not update bike in database");
+            }
 
         } catch (RaceBikeException e) {
             showError("Error updating race bike", e.getMessage());
+        } catch (NumberFormatException e) {
+            showError("Invalid Input", "Price must be a valid number");
         }
     }
 
@@ -150,12 +159,13 @@ public class RaceBikesPresenter {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
-                service.deleteRaceBike(selectedBike);
-
-                raceBikesList.remove(selectedBike);
-
-                view.clearInputFields();
-                view.setStatusMessage("Successfully deleted: " + selectedBike.getModel(), false);
+                if (service.deleteRaceBike(selectedBike)) {
+                    raceBikesList.remove(selectedBike);
+                    view.clearInputFields();
+                    view.setStatusMessage("Successfully deleted: " + selectedBike.getModel(), false);
+                } else {
+                    showError("Error deleting race bike", "Could not delete bike from database");
+                }
 
             } catch (Exception e) {
                 showError("Error deleting race bike", e.getMessage());
@@ -180,6 +190,9 @@ public class RaceBikesPresenter {
             view.getPriceTextField().setText(
                     selectedBike.getPrice() != null ? selectedBike.getPrice().toString() : ""
             );
+            view.getCurrencyComboBox().setValue(selectedBike.getCurrency());
+            view.getFrameMaterialComboBox().setValue(selectedBike.getFrameMaterial());
+            view.getBrakeTypeComboBox().setValue(selectedBike.getBrakeType());
         }
     }
 
